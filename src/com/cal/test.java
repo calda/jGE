@@ -1,8 +1,8 @@
 package com.cal;
 
-import java.awt.Color;
 import jge.render.Render2D;
 import jge.render.Screen;
+import jge.world.World;
 
 public class test{
 
@@ -11,8 +11,11 @@ public class test{
 	public static void main(String[] args){
 		Screen s = new Screen();
 		Render2D r2d = s.setWindowed("Woo a window.");
-		r2d.setResizable(false);
-		r2d.setBackground(Color.RED);
+		World world = new World(100, 100, 1);
+		System.out.println(world);
+		r2d.setRenderingWorld(world);
+		r2d.getRenderFrame().repaint();
+		System.out.println(r2d.getRenderingWorld());
 	}
 	
 }

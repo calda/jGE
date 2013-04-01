@@ -37,11 +37,9 @@ public class Screen{
 	 * Set the screen to a fullscreen window with the maximum possible size
 	 * @return the JFrame that you can work with
 	 */
+	@Deprecated
 	public Render2D setFullscreen(){
-		Render2D f = new Render2D();
-		graphics.setFullScreenWindow(f);
-		graphics.setDisplayMode(getLargestMode());
-		return f;
+		return null;
 	}
 	
 	/**
@@ -51,7 +49,18 @@ public class Screen{
 	 */
 	public Render2D setWindowed(String windowName){
 		DisplayMode mode = getSmallestMode();
-		return setWindowed(windowName, mode.getWidth(), mode.getHeight());
+		return setWindowed(windowName, mode.getWidth(), mode.getHeight(), 50);
+	}
+	
+	/**
+	 * Adds a window in the center of the frame with the smallest applicable window size
+	 * @param windowName the name of the window to create
+	 * @param rendersPerSecond number of renders to complete per second
+	 * @return 
+	 */
+	public Render2D setWindowed(String windowName, int rendersPerSecond){
+		DisplayMode mode = getSmallestMode();
+		return setWindowed(windowName, mode.getWidth(), mode.getHeight(), 50);
 	}
 	
 	/**
@@ -59,10 +68,11 @@ public class Screen{
 	 * @param windowName the name of the window to create
 	 * @param x width of the window
 	 * @param y height of the window
+	 * @param rendersPerSecond number of renders to complete per second
 	 * @return 
 	 */
-	public Render2D setWindowed(String windowName, int x, int y){
-		Render2D f = new Render2D();
+	public Render2D setWindowed(String windowName, int x, int y, int rendersPerSecond){
+		RenderFrame f = new RenderFrame();
 		DisplayMode mode = getSmallestMode();
 		f.setTitle(windowName);
 		f.setBounds(getPositionForCenter(x, graphics.getDisplayMode().getWidth()), 
@@ -71,7 +81,8 @@ public class Screen{
 		f.setResizable(true);
 		f.setEnabled(true);
 		f.setVisible(true);
-		return f;
+		Render2D render = new Render2D(f, rendersPerSecond);
+		return render;
 	}
 	
 	private static int getPositionForCenter(int window, int screen){

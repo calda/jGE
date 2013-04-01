@@ -18,13 +18,24 @@ public class World implements Renderable{
 		this.coordsX = coordsX;
 		this.coordsY = coordsY;
 		this.pixelsPerBlock = pixelsPerBlock;
-		for(int i = 0; i <= cams.length; i++){
+		for(int i = 0; i < cams.length; i++){
 			cams[i] = null;
 		}
 	}
 	
-	public void render(Graphics2D graphics){
-		
+	public String toString(){
+		return "World (" + coordsX + "," + coordsY + ")";
+	}
+	
+	public void render(Graphics2D g){
+		List<CoordinateObject> objectsList = new ArrayList<CoordinateObject>();
+		for(CoordinateObject object : objects){
+			objectsList.add(object);
+		}for(CoordinateObject object : objectsList){
+			if(object instanceof Renderable){
+				((Renderable) object).render(g);
+			}
+		}
 	}
 	
 	public int getMaxCoordsX(){

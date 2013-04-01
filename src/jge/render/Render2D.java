@@ -1,22 +1,23 @@
 package jge.render;
 
 import java.awt.Graphics2D;
-import javax.swing.JFrame;
 import jge.world.World;
 
-@SuppressWarnings("serial")
-public class Render2D extends JFrame{
+public class Render2D{
 
 	private World world;
 	private int rendersPerSecond;
 	private int msBetweenRenders;
+	private final RenderFrame frame;
 	
-	public Render2D(int rendersPerSecond){
+	public Render2D(RenderFrame frame, int rendersPerSecond){
 		setRendersPerSecond(rendersPerSecond);
+		this.frame = frame;
+		frame.setRender(this);
 	}
 	
-	public Render2D(){
-		this(50);
+	public RenderFrame getRenderFrame(){
+		return frame;
 	}
 	
 	public void setRendersPerSecond(int rps){
@@ -28,10 +29,20 @@ public class Render2D extends JFrame{
 		return rendersPerSecond;
 	}
 	
+	protected int getMsBetweenRenders(){
+		return msBetweenRenders;
+	}
+	
+	public World getRenderingWorld(){
+		return world;
+	}
+	
+	public void setRenderingWorld(World world){
+		this.world = world;
+	}
 	
 	public void paint(final Graphics2D g){
 		world.render(g);
-		this.repaint(msBetweenRenders);
 	}
 
 }
