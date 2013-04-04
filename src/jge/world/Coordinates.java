@@ -34,5 +34,31 @@ public class Coordinates{
 	public static Coordinates make(int x, int y){
 		return new Coordinates(x, y);
 	}
+	
+	public static Coordinates make(Coordinates c){
+		return new Coordinates(c.getX(), c.getY());
+	}
+	
+	public Coordinates add(int add){
+		x += add;
+		y += add;
+		return this;
+	}
+	
+	public Coordinates subtract(int sub){
+		x -= sub;
+		y -= sub;
+		return this;
+	}
+	
+	public Coordinates add(Coordinates add){
+		x += add.getX();
+		y += add.getY();
+		return this;
+	}
+	
+	public String toString(){
+		return "Coordinates (" + x + "," + y + ")";
+	}
 
 }

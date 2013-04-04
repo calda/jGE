@@ -15,11 +15,15 @@ public class RenderFrame extends JFrame{
 	
 	@Override
 	public void paint(Graphics g){
+		g.clearRect(0, 0, 1920, 1080);
 		long start = System.currentTimeMillis();
 		render.paint((Graphics2D)g);
 		long renderTime = System.currentTimeMillis() - start;
 		System.out.println("Render complete, taking " + renderTime + "ms to complete");
-		this.repaint(render.getMsBetweenRenders() - renderTime);
+		try{
+			Thread.sleep(render.getMsBetweenRenders() - renderTime);
+		} catch(InterruptedException exe){}
+		this.repaint();
 	}
 	
 }

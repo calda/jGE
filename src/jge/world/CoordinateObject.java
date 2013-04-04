@@ -17,11 +17,19 @@ public class CoordinateObject{
 		return pos;
 	}
 	
+	public void updatePos(Coordinates c){
+		pos = c;
+	}
+	
+	public void updatePos(int x, int y){
+		pos = Coordinates.make(x, y);
+	}
+	
 	protected void setWorld(World w){
 		this.owningWorld = w;
 	}
 	
-	protected World getOwningWorld(){
+	public World getOwningWorld(){
 		return owningWorld;
 	}
 	
