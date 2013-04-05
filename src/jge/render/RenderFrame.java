@@ -19,7 +19,7 @@ public class RenderFrame extends JFrame{
 		long start = System.currentTimeMillis();
 		render.paint((Graphics2D)g);
 		long renderTime = System.currentTimeMillis() - start;
-		System.out.println("Render complete, taking " + renderTime + "ms to complete");
+		//System.out.println("Render complete, taking " + renderTime + "ms to complete");
 		try{
 			Thread.sleep(render.getMsBetweenRenders() - renderTime);
 		} catch(InterruptedException exe){}

@@ -21,7 +21,7 @@ public class TickManager{
 		timer.scheduleAtFixedRate(new TimerTask(){
 			@Override
 			public void run(){
-				System.out.println("tick");
+				//System.out.println("tick");
 				owning.tickAllBehaviors();
 			}
 		}, 1, (long)(1.0f/ticksPerSecond * 1000f));

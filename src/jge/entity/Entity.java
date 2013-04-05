@@ -38,7 +38,6 @@ public class Entity extends CoordinateObject implements Renderable, Behaving{
 	@Override
 	public void render(Graphics2D g){
 		Coordinates onScreen = getOwningWorld().getScreenPosition(getPos());
-		System.out.println(onScreen);
 		g.drawImage(image, onScreen.getX(), onScreen.getY(), null);
 	}
 	

@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import jge.entity.Entity;
 import jge.entity.TickBehavior;
+import jge.input.MouseListen;
 import jge.render.Render2D;
 import jge.render.Screen;
 import jge.world.Coordinates;
@@ -19,6 +20,7 @@ public class test{
 		Screen s = new Screen();
 		Render2D r2d = s.setWindowed("Woo a window.");
 		r2d.setRendersPerSecond(100);
+		r2d.getRenderFrame().addMouseListener(new MouseListen());
 		World world = new World(r2d.getRenderFrame().getWidth(), r2d.getRenderFrame().getHeight(), 1);
 		System.out.println(world);
 		r2d.setRenderingWorld(world);
