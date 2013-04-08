@@ -3,7 +3,9 @@ package jge.world;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
-import jge.entity.Behaving;
+import jge.behavior.ActionType;
+import jge.behavior.Behaving;
+import jge.render.Render2D;
 import jge.render.Renderable;
 
 public class World implements Renderable{
@@ -15,6 +17,7 @@ public class World implements Renderable{
 	Camera[] cams = new Camera[5];
 	int activeCamera = 0;
 	private final TickManager manager;
+	private Render2D renderer;
 	
 	public World(int maxX, int maxY, int pixelsPerBlock){
 		coordsX = maxX;
@@ -23,6 +26,14 @@ public class World implements Renderable{
 		for(int i = 0; i < cams.length; i++){
 			cams[i] = null;
 		}manager = new TickManager(this);
+	}
+	
+	public void setRenderer(Render2D renderer){
+		this.renderer = renderer;
+	}
+	
+	public Render2D getRenderer(){
+		return renderer;
 	}
 	
 	public String toString(){
@@ -99,11 +110,20 @@ public class World implements Renderable{
 	}
 	
 	public void tickAllBehaviors(){
+		actionRelevantBehaviors(ActionType.TICK);
+	}
+	
+	public void actionRelevantBehaviors(ActionType type, Object additional){
 		for(CoordinateObject object : objects){
 			if(object instanceof Behaving){
-				((Behaving) object).tickAllBehaviors();
+				Behaving b = (Behaving) object;
+				b.actionRelevantBehaviors(type, additional);
 			}
 		}
+	}
+
+	public void actionRelevantBehaviors(ActionType type){
+		actionRelevantBehaviors(type, null);
 	}
 	
 	public TickManager getTickManager(){

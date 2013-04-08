@@ -9,7 +9,7 @@ public class Camera extends CoordinateObject implements Renderable{
 		super(pos);
 	}
 	
-	public Camera(int x, int y){
+	public Camera(double x, double y){
 		super(x, y);
 	}
 

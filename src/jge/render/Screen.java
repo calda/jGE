@@ -6,16 +6,26 @@ import java.util.List;
 
 public class Screen{
 
-	private GraphicsDevice graphics;
 	private final boolean bit32;
 	private final boolean widescreen;
+	private final static GraphicsDevice graphics;
+	
+	static{
+		graphics = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+	}
+	
+	public static int getX(){
+		return graphics.getDisplayMode().getWidth();
+	}
+	
+	public static int getY(){
+		return graphics.getDisplayMode().getHeight();
+	}
 	
 	/**
 	 * Create a Screen with default settings (16x9, 32bit depth)
 	 */
 	public Screen(){
-		GraphicsEnvironment enviro = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		graphics = enviro.getDefaultScreenDevice();
 		bit32 = true;
 		widescreen = true;
 	}
@@ -26,8 +36,6 @@ public class Screen{
 	 * @param usewidescreen Possibles dimention set. If true, all 16x9 dimensions will be avaliable. Else all non-16x9 will be avaliable.
 	 */
 	public Screen(boolean use32bit, boolean usewidescreen){
-		GraphicsEnvironment enviro = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		graphics = enviro.getDefaultScreenDevice();
 		this.bit32 = use32bit;
 		this.widescreen = usewidescreen;
 	}
@@ -43,27 +51,6 @@ public class Screen{
 	}
 	
 	/**
-	 * Adds a window in the center of the frame with the smallest applicable window size
-	 * @param windowName the name of the window to create
-	 * @return 
-	 */
-	public Render2D setWindowed(String windowName){
-		DisplayMode mode = getSmallestMode();
-		return setWindowed(windowName, mode.getWidth(), mode.getHeight(), 50);
-	}
-	
-	/**
-	 * Adds a window in the center of the frame with the smallest applicable window size
-	 * @param windowName the name of the window to create
-	 * @param rendersPerSecond number of renders to complete per second
-	 * @return 
-	 */
-	public Render2D setWindowed(String windowName, int rendersPerSecond){
-		DisplayMode mode = getSmallestMode();
-		return setWindowed(windowName, mode.getWidth(), mode.getHeight(), 50);
-	}
-	
-	/**
 	 * Adds a window in the center of the frame with the window size
 	 * @param windowName the name of the window to create
 	 * @param x width of the window
@@ -71,14 +58,18 @@ public class Screen{
 	 * @param rendersPerSecond number of renders to complete per second
 	 * @return 
 	 */
-	public Render2D setWindowed(String windowName, int x, int y, int rendersPerSecond){
+	public static Render2D addWindow(String windowName, int x, int y){
+		return addWindow(windowName, x, y, 50);
+	}
+	
+	public static Render2D addWindow(String windowName, int x, int y, int rendersPerSecond){
+		GraphicsDevice graphics = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		RenderFrame f = new RenderFrame();
-		DisplayMode mode = getSmallestMode();
 		f.setTitle(windowName);
 		f.setBounds(getPositionForCenter(x, graphics.getDisplayMode().getWidth()), 
 					getPositionForCenter(y, graphics.getDisplayMode().getHeight()) - (System.getProperty("os.name").contains("Mac") ? 66 : 40),
-					mode.getWidth(), mode.getHeight());
-		f.setResizable(true);
+					x, y);
+		f.setResizable(false);
 		f.setEnabled(true);
 		f.setVisible(true);
 		Render2D render = new Render2D(f, rendersPerSecond);

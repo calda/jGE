@@ -2,36 +2,36 @@ package jge.world;
 
 public class Coordinates{
 
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	
-	public Coordinates(int x, int y){
+	public Coordinates(double x, double y){
 		this.x = x;
 		this.y = y;
 	}
 	
-	public void setX(int newX){
+	public void setX(double newX){
 		this.x = newX;
 	}
 	
-	public void setY(int newY){
+	public void setY(double newY){
 		this.y = newY;
 	}
 	
-	public void setPosition(int newX, int newY){
+	public void setPosition(double newX, double newY){
 		setX(newX);
 		setY(newY);
 	}
 	
-	public int getX(){
+	public double getX(){
 		return x;
 	}
 	
-	public int getY(){
+	public double getY(){
 		return y;
 	}
 	
-	public static Coordinates make(int x, int y){
+	public static Coordinates make(double x, double y){
 		return new Coordinates(x, y);
 	}
 	
@@ -39,13 +39,13 @@ public class Coordinates{
 		return new Coordinates(c.getX(), c.getY());
 	}
 	
-	public Coordinates add(int add){
+	public Coordinates add(double add){
 		x += add;
 		y += add;
 		return this;
 	}
 	
-	public Coordinates subtract(int sub){
+	public Coordinates subtract(double sub){
 		x -= sub;
 		y -= sub;
 		return this;

@@ -5,7 +5,7 @@ public class CoordinateObject{
 	private Coordinates pos;
 	private World owningWorld;
 	
-	public CoordinateObject(int x, int y){
+	public CoordinateObject(double x, double y){
 		pos = new Coordinates(x, y);
 	}
 	
@@ -21,7 +21,7 @@ public class CoordinateObject{
 		pos = c;
 	}
 	
-	public void updatePos(int x, int y){
+	public void updatePos(double x, double y){
 		pos = Coordinates.make(x, y);
 	}
 	
