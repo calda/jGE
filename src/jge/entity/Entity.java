@@ -15,7 +15,7 @@ import jge.world.Coordinates;
 
 public class Entity extends CoordinateObject implements Renderable, Behaving{
 
-	private Image image;
+	public Image image;
 	private HashMap<String, Behavior> behaviors = new HashMap<String, Behavior>();
 
 	public Entity(Coordinates pos, Image image){

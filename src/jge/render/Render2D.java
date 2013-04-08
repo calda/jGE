@@ -12,6 +12,7 @@ public class Render2D{
 	private int msBetweenRenders;
 	private final RenderFrame frame;
 	private MouseHandler mouse;
+	private GUI gui;
 	
 	public Render2D(RenderFrame frame, int rendersPerSecond){
 		setRendersPerSecond(rendersPerSecond);
@@ -19,6 +20,7 @@ public class Render2D{
 		frame.setRender(this);
 		mouse = new MouseHandler();
 		mouse.attributeTo(this);
+		gui = new GUI(this);
 	}
 	
 	public RenderFrame getRenderFrame(){
@@ -48,7 +50,13 @@ public class Render2D{
 	}
 	
 	public void paint(final Graphics2D g){
+		
 		world.render(g);
+		gui.render(g);
+	}
+	
+	public void startRendering(){
+		this.getRenderFrame().repaint();
 	}
 	
 	public Coordinates getMousePos(){
@@ -57,6 +65,10 @@ public class Render2D{
 	
 	public MouseHandler getMouseHandler(){
 		return mouse;
+	}
+	
+	public GUI getGUI(){
+		return gui;
 	}
 
 }

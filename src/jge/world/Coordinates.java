@@ -57,8 +57,22 @@ public class Coordinates{
 		return this;
 	}
 	
+	public Coordinates subtract(Coordinates sub){
+		x -= sub.getX();
+		y -= sub.getY();
+		return this;
+	}
+	
 	public String toString(){
 		return "Coordinates (" + x + "," + y + ")";
+	}
+	
+	public double distance(Coordinates c){
+		double x1 = this.getX();
+		double y1 = this.getY();
+		double x2 = c.getX();
+		double y2 = c.getY();
+		return Math.sqrt(Math.pow(y2 - y1, 2) + Math.pow(x2 - x1, 2));
 	}
 
 }

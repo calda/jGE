@@ -2,6 +2,7 @@ package com.cal;
 import jge.behavior.Action;
 import jge.behavior.Behaving;
 import jge.entity.Entity;
+import jge.render.GUIText;
 import jge.render.Render2D;
 import jge.render.Screen;
 import jge.world.Coordinates;
@@ -26,6 +27,10 @@ public class test{
 		World world = new World(800, 450, 1);
 		render.setRenderingWorld(world);
 		world.add(ent);
+		System.out.println(render.getRendersPerSecond());
 		world.getTickManager().startNewTickThread();
+		GUIText text = new GUIText("OUT", Coordinates.make(50, 50), "ahsgfkhdgsfk");
+		render.getGUI().addGUIElement(text);
+		render.startRendering();
 	}
 }
