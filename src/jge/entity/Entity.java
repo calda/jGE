@@ -8,55 +8,74 @@ import java.util.Map.Entry;
 import jge.behavior.ActionType;
 import jge.behavior.Behaving;
 import jge.behavior.Behavior;
-import jge.render.Renderable;
-import jge.render.Scaleable;
+import jge.render.*;
 import jge.util.Util;
 import jge.world.CoordinateObject;
 import jge.world.Coordinates;
 
-public class Entity extends CoordinateObject implements Renderable, Behaving, Scaleable{
+public class Entity extends CoordinateObject implements Renderable, Behaving, Scaleable, Prioritizable{
 
 	private Image image;
 	private Coordinates dim;
 	private double scale = 1;
-	private HashMap<String, Behavior> behaviors = new HashMap<String, Behavior>();
+	protected HashMap<String, Behavior> behaviors = new HashMap<String, Behavior>();
+	private Priority priority;
 
 	public Entity(Coordinates pos, Coordinates dim, Image image){
+		this(pos, dim, image, Priority.NORMAL);
+	}
+	
+	public Entity(Coordinates pos, Coordinates dim, Image image, Priority p){
 		super(pos);
 		this.image = image;
 		this.dim = dim;
+		setPriority(p);
+	}
+	
+	public Entity(Coordinates pos, Coordinates dim, String filePath, Priority p){
+		super(pos);
+		this.image = Util.imageFromPath(filePath);
+		this.dim = dim;
+		setPriority(p);
 	}
 	
 	public Entity(Coordinates pos, Coordinates dim, String filePath){
-		super(pos);
-		this.image = Util.imageFromPath(filePath);
-		this.dim = dim;
+		this(pos, dim, filePath, Priority.NORMAL);
 	}
 
-	public Entity(Coordinates pos, Coordinates dim, Image image, Behavior...behaviors){
+	public Entity(Coordinates pos, Coordinates dim, Image image, Priority p, Behavior...behaviors){
 		super(pos);
 		this.image = image;
 		this.dim = dim;
 		for(Behavior b : behaviors){
 			addBehavior(b);
-		}
+		}setPriority(p);
 	}
 	
-	public Entity(Coordinates pos, Coordinates dim, String filePath, Behavior...behaviors){
+	public Entity(Coordinates pos, Coordinates dim, Image image, Behavior...behaviors){
+		this(pos, dim, image, Priority.NORMAL, behaviors);
+	}
+	
+	public Entity(Coordinates pos, Coordinates dim, String filePath, Priority p, Behavior...behaviors){
 		super(pos);
 		this.image = Util.imageFromPath(filePath);
 		this.dim = dim;
 		for(Behavior b : behaviors){
 			addBehavior(b);
-		}
+		}setPriority(p);
+	}
+	
+	public Entity(Coordinates pos, Coordinates dim, String filePath, Behavior...behaviors){
+		this(pos, dim, filePath, Priority.NORMAL, behaviors);
 	}
 
 	@Override
 	public void render(Graphics2D g){
-		Coordinates onScreen = getOwningWorld().getScreenPosition(getPos());
-		Coordinates scaledDim = Coordinates.make(dim).multiply(scale);
+		Coordinates onScreen = getOwningWorld().getScreenPosition(getOwningWorld().makeWithinMapBounds(getPos()));
+		Coordinates scaledDim = Coordinates.make(this.getDimentions()).multiply(this.getScale());
 		onScreen = onScreen.subtract(Coordinates.make(scaledDim).multiply(0.5));
-		g.drawImage(image, (int)onScreen.getX(), (int)onScreen.getY(), null);
+		//g.drawImage(image, (int)onScreen.getX(), (int)onScreen.getY(), null);
+		g.drawImage(image, (int)onScreen.getX(), (int)onScreen.getY(), (int)scaledDim.getX(), (int)scaledDim.getY(), null);
 	}
 
 	public void addBehavior(Behavior b){
@@ -109,6 +128,19 @@ public class Entity extends CoordinateObject implements Renderable, Behaving, Sc
 
 	public double getScale(){
 		return scale;
+	}
+	
+	public void setPriority(Priority p){
+		this.priority = p;
+	}
+	
+	public Priority getPriority(){
+		return priority;
+	}
+	
+	@Override
+	public String toString(){
+		return "Entity at " + getPos() + " with " + behaviors.size() + " behavior(s) and priority of " + getPriority();
 	}
 
 }

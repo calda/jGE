@@ -47,7 +47,5 @@ public class GUI implements Renderable{
 			i.next().getValue().render(g);
 		}
 	}
-
-	
 	
 }

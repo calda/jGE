@@ -35,6 +35,11 @@ public class Util{
 		return colorful[(new Random()).nextInt(colorful.length)];
 	}
 	
+	private final static Random r = new Random();
+	public static boolean randomOutOf(int options){
+		return r.nextInt(options) == 0;
+	}
+	
 	static{
 		
 	}

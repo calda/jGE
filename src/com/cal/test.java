@@ -22,16 +22,22 @@ public class Test{
 				}
 			}
 		});
-		Shape s = new Shape(Coordinates.make(30, 30), Coordinates.make(100, 100), ShapeType.OVAL, Color.DARK_GRAY);
-		s.addBehavior(b);
+		Entity e = new Entity(Coordinates.make(90,90), Coordinates.make(50, 50), "TriangleGame/images.jpg");
+		e.setScale(30);
+		Shape s = new Shape(Coordinates.make(30, 30), Coordinates.make(100, 100), ShapeType.OVAL, Color.DARK_GRAY, Priority.HIGHEST);
+		e.addBehavior(b);
+		Shape s2 = new Shape(Coordinates.make(300, 300), Coordinates.make(150, 100), ShapeType.RECTANGLE, Color.GREEN, Priority.HIGHEST);
+		Shape s3 = new Shape(Coordinates.make(300, 30), Coordinates.make(50, 25), ShapeType.OVAL, Color.MAGENTA);
+		Shape s4 = new Shape(Coordinates.make(30, 300), Coordinates.make(50, 25), ShapeType.OVAL, Color.RED, Priority.LOWEST);
 		Render2D render = Screen.addWindow("shapes", 800, 450);
 		World world = new World(800, 450, 1);
 		render.setRenderingWorld(world);
+		world.add(e);
+		world.add(s2);
+		world.add(s3);
+		world.add(s4);
 		world.add(s);
-		System.out.println(render.getRendersPerSecond());
 		world.getTickManager().startNewTickThread();
-		GUIText text = new GUIText("OUT", Coordinates.make(50, 50), "ahsgfkhdgsfk");
-		render.getGUI().addGUIElement(text);
 		render.startRendering();
 	}
 }

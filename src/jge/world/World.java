@@ -1,11 +1,11 @@
 package jge.world;
 
 import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import jge.behavior.ActionType;
 import jge.behavior.Behaving;
 import jge.render.Render2D;
+import jge.render.RenderPriorityComparator;
 import jge.render.Renderable;
 
 public class World implements Renderable{
@@ -73,7 +73,8 @@ public class World implements Renderable{
 		List<Renderable> render = new ArrayList<Renderable>();
 		for(CoordinateObject object : objects){
 			if(object instanceof Renderable) render.add((Renderable)object);
-		}for(Renderable r : render){
+		}Collections.sort(render, new RenderPriorityComparator());
+		for(Renderable r : render){
 			r.render(g);
 		}rendering = false;
 	}
@@ -104,15 +105,10 @@ public class World implements Renderable{
 
 	private void removeWillRemove(){
 		if(!rendering && !ticking){
-			removing = true;
-			System.out.println("Removing " + willRemove.size() + " objects");
 			for(CoordinateObject object : willRemove){
-				System.out.println("Removing " + object);
 				objects.remove(object);
 				if(object instanceof Behaving){
-					System.out.println("Ending " + object);
 					((Behaving)object).actionRelevantBehaviors(ActionType.END);
-					System.out.println("Done ending " + object);
 				}
 			}willRemove.clear();
 			removing = false;
@@ -147,7 +143,7 @@ public class World implements Renderable{
 	}
 
 	public Coordinates getScreenPosition(Coordinates onMap){
-		if(!withinMapBounds(onMap)) throw new IllegalArgumentException("Coordinates must be within map bounds (" + coordsX + "," + coordsY + ")");
+		if(!withinMapBounds(onMap)) throw new IllegalArgumentException("Coordinates must be within map bounds (" + coordsX + "," + coordsY + ") and was (" + onMap.getX() + "," + onMap.getY() + ")");
 		return Coordinates.make(onMap.getX() * pixelsPerBlock, onMap.getY() * pixelsPerBlock);
 	}
 
@@ -158,8 +154,20 @@ public class World implements Renderable{
 			}
 		}return false;
 	}
+	
+	public Coordinates makeWithinMapBounds(Coordinates onMap){
+		if(withinMapBounds(onMap)) return onMap;
+		Coordinates clone = Coordinates.make(onMap);
+		if(clone.getX() > coordsX) clone.setX(coordsX);
+		if(clone.getX() < 0) clone.setX(0);
+		if(clone.getY() > coordsY) clone.setY(coordsY);
+		if(clone.getY() < 0) clone.setY(0);
+		System.out.println("Changed " + onMap + " to " + clone);
+		return clone;
+	}
 
 	public void tickAllBehaviors(){
+		getRenderer().getMouseHandler().mostRecentMouse = getRenderer().getMousePos();
 		actionRelevantBehaviors(ActionType.TICK);
 	}
 
