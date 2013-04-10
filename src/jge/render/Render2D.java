@@ -51,7 +51,8 @@ public class Render2D{
 	
 	public void paint(final Graphics2D g){
 		
-		world.render(g);
+		if(world != null) world.render(g);
+		else g.clearRect(0, 0, 1920, 1080);
 		gui.render(g);
 	}
 	
@@ -60,7 +61,11 @@ public class Render2D{
 	}
 	
 	public Coordinates getMousePos(){
-		return Coordinates.make(this.getRenderFrame().getMousePosition().x, this.getRenderFrame().getMousePosition().y);
+		try{
+			return Coordinates.make(this.getRenderFrame().getMousePosition().x, this.getRenderFrame().getMousePosition().y);
+		}catch(Exception e){
+			return this.getMouseHandler().mostRecentMouseExit;
+		}
 	}
 	
 	public MouseHandler getMouseHandler(){

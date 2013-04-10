@@ -1,5 +1,7 @@
 package jge.world;
 
+import java.awt.Point;
+
 public class Coordinates{
 
 	private double x;
@@ -18,7 +20,7 @@ public class Coordinates{
 		this.y = newY;
 	}
 	
-	public void setPosition(double newX, double newY){
+	public void set(double newX, double newY){
 		setX(newX);
 		setY(newY);
 	}
@@ -45,6 +47,12 @@ public class Coordinates{
 		return this;
 	}
 	
+	public Coordinates multiply(double mul){
+		x *= mul;
+		y *= mul;
+		return this;
+	}
+	
 	public Coordinates subtract(double sub){
 		x -= sub;
 		y -= sub;
@@ -54,6 +62,12 @@ public class Coordinates{
 	public Coordinates add(Coordinates add){
 		x += add.getX();
 		y += add.getY();
+		return this;
+	}
+	
+	public Coordinates multiply(Coordinates mul){
+		x *= mul.getX();
+		y *= mul.getY();
 		return this;
 	}
 	
@@ -68,11 +82,16 @@ public class Coordinates{
 	}
 	
 	public double distance(Coordinates c){
+		if(c == null) return 0;
 		double x1 = this.getX();
 		double y1 = this.getY();
 		double x2 = c.getX();
 		double y2 = c.getY();
 		return Math.sqrt(Math.pow(y2 - y1, 2) + Math.pow(x2 - x1, 2));
+	}
+	
+	public static Coordinates make(Point p){
+		return Coordinates.make(p.x, p.y);
 	}
 
 }

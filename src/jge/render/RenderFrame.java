@@ -24,14 +24,14 @@ public class RenderFrame extends JFrame{
 			first = false;
 			return;
 		}
-		g.clearRect(0, 0, 1920, 1080);
+		//g.clearRect(0, 0, 1920, 1080);
 		long start = System.currentTimeMillis();
 		render.paint((Graphics2D)g);
 		long renderTime = System.currentTimeMillis() - start;
-		System.out.println("Render complete, taking " + renderTime + "ms to complete");
+		//System.out.println("Render complete, taking " + renderTime + "ms to complete");
 		try{
 			long sleep = render.getMsBetweenRenders() - renderTime;
-			System.out.println("waiting " + sleep + " due to " + render.getMsBetweenRenders() + " between render");
+			//System.out.println("waiting " + sleep + " due to " + render.getMsBetweenRenders() + " between render");
 			Thread.sleep((sleep > 0) ? sleep : 0);
 		} catch(InterruptedException exe){}
 		this.repaint();

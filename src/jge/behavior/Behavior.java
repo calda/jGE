@@ -41,8 +41,19 @@ public class Behavior{
 		System.out.println(methods);
 	}
 	
+	public void addAction(Runnable action){
+		for(Method m : action.getClass().getMethods()){
+			Action act = m.getAnnotation(Action.class);
+			if(act != null){
+				ActionType type = act.type();
+				List<Method> typemethods = methods.get(type);
+				m.setAccessible(true);
+				typemethods.add(m);
+			}
+		}
+	}
+	
 	public void action(ActionType type, Object additional, Behaving behaving){
-		System.out.println(type + " " + additional + " " + " " + behaving);
 		if(type.getType() == ActionType.Type.RUNTIME){ 
 			for(Method m : methods.get(type)){
 				try{

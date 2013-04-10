@@ -19,11 +19,6 @@ public class MoveToMouseOnClick extends Behavior{
 	public void onMousePress(Behaving b){
 		Entity e = (Entity)b;
 		Coordinates coor = e.getOwningWorld().getRenderer().getMousePos();
-		try{
-			coor.subtract(Coordinates.make(e.image.getWidth(null), e.image.getHeight(null)));
-		}catch(Exception exe){
-			coor.subtract(10);
-		}
 		e.updatePos(coor);
 	}
 	

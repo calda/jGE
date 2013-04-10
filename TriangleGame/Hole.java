@@ -12,7 +12,6 @@ public class Hole extends Entity{
 	public Hole(Coordinates pos){
 		super(pos, "");
 		holes.add(this);
-		System.out.println(holes);
 	}
 	
 	public boolean mostRecent = false;
@@ -24,11 +23,7 @@ public class Hole extends Entity{
 		g.fillOval((int)getPos().getX(), (int)getPos().getY(), 20, 20);
 	}
 
-	public static List<Hole> holes;
-	
-	static{
-		holes = new ArrayList<Hole>();
-	}
+	public static List<Hole> holes = new ArrayList<Hole>();
 	
 	public static Hole getClosestHoleToPoint(Coordinates c){
 		double distance = 9999999;

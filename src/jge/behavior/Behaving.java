@@ -10,5 +10,6 @@ public interface Behaving{
 	public void tickAllBehaviors();
 	public void actionRelevantBehaviors(ActionType action, Object additional);
 	public void actionRelevantBehaviors(ActionType action);
+	public void destroy();
 	
 }

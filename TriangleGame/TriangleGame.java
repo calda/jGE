@@ -1,6 +1,9 @@
 package com.cal;
 
+import java.util.Arrays;
+import java.util.Random;
 import jge.entity.Entity;
+import jge.input.MouseButton;
 import jge.render.GUIText;
 import jge.render.Render2D;
 import jge.render.Screen;
@@ -20,13 +23,18 @@ public class TriangleGame{
 		};
 		
 		Entity ent = new Entity(Coordinates.make(30, 30), "triangle.png");
-		ent.addBehavior(new LightUp());
 		Render2D render = Screen.addWindow("Triangle Game", 800, 450);
-		World world = new World(800, 450, 1);
+		World world = new World(800, 450, new LightUp());
 		render.setRenderingWorld(world);
 		world.add(ent);
 		for(Coordinates c : holes){
 			world.add(new Hole(c));
+		}
+		int not = (new Random()).nextInt(holes.length);
+		for(int i = 0; i < holes.length; i += 1){
+			if(not != i){
+				world.add(new Peg(holes[i]));
+			}
 		}
 		System.out.println(render.getRendersPerSecond());
 		GUIText text = new GUIText("OUT", Coordinates.make(50, 50), "ahsgfkhdgsfk");

@@ -9,36 +9,43 @@ import jge.behavior.ActionType;
 import jge.behavior.Behaving;
 import jge.behavior.Behavior;
 import jge.render.Renderable;
+import jge.render.Scaleable;
 import jge.util.Util;
 import jge.world.CoordinateObject;
 import jge.world.Coordinates;
 
-public class Entity extends CoordinateObject implements Renderable, Behaving{
+public class Entity extends CoordinateObject implements Renderable, Behaving, Scaleable{
 
-	public Image image;
+	private Image image;
+	private Coordinates dim;
+	private double scale = 1;
 	private HashMap<String, Behavior> behaviors = new HashMap<String, Behavior>();
 
-	public Entity(Coordinates pos, Image image){
+	public Entity(Coordinates pos, Coordinates dim, Image image){
 		super(pos);
 		this.image = image;
+		this.dim = dim;
 	}
 	
-	public Entity(Coordinates pos, String filePath){
+	public Entity(Coordinates pos, Coordinates dim, String filePath){
 		super(pos);
 		this.image = Util.imageFromPath(filePath);
+		this.dim = dim;
 	}
 
-	public Entity(Coordinates pos, Image image, Behavior...behaviors){
+	public Entity(Coordinates pos, Coordinates dim, Image image, Behavior...behaviors){
 		super(pos);
 		this.image = image;
+		this.dim = dim;
 		for(Behavior b : behaviors){
 			addBehavior(b);
 		}
 	}
 	
-	public Entity(Coordinates pos, String filePath, Behavior...behaviors){
+	public Entity(Coordinates pos, Coordinates dim, String filePath, Behavior...behaviors){
 		super(pos);
 		this.image = Util.imageFromPath(filePath);
+		this.dim = dim;
 		for(Behavior b : behaviors){
 			addBehavior(b);
 		}
@@ -47,6 +54,8 @@ public class Entity extends CoordinateObject implements Renderable, Behaving{
 	@Override
 	public void render(Graphics2D g){
 		Coordinates onScreen = getOwningWorld().getScreenPosition(getPos());
+		Coordinates scaledDim = Coordinates.make(dim).multiply(scale);
+		onScreen = onScreen.subtract(Coordinates.make(scaledDim).multiply(0.5));
 		g.drawImage(image, (int)onScreen.getX(), (int)onScreen.getY(), null);
 	}
 
@@ -80,6 +89,26 @@ public class Entity extends CoordinateObject implements Renderable, Behaving{
 
 	public void actionRelevantBehaviors(ActionType type){
 		actionRelevantBehaviors(type, null);
+	}
+	
+	public void destroy(){
+		getOwningWorld().remove(this);
+	}
+
+	public void setDimentions(Coordinates dim){
+		this.dim = dim;
+	}
+
+	public Coordinates getDimentions(){
+		return dim;
+	}
+
+	public void setScale(double scale){
+		this.scale = scale;
+	}
+
+	public double getScale(){
+		return scale;
 	}
 
 }

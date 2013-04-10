@@ -4,12 +4,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import jge.behavior.ActionType;
 import jge.render.Render2D;
+import jge.world.Coordinates;
 
 public class MouseHandler implements MouseListener{
 
 	private Render2D render;
 	public boolean leftDown = false;
 	public boolean rightDown = false;
+	public Coordinates mostRecentMouseExit = Coordinates.make(0, 0);
 	
 	@Override
 	public void mouseClicked(MouseEvent e){
@@ -23,6 +25,7 @@ public class MouseHandler implements MouseListener{
 	@Override
 	public void mouseExited(MouseEvent e){
 		render.getRenderingWorld().actionRelevantBehaviors(ActionType.MOUSE_EXIT_WINDOW);
+		mostRecentMouseExit = Coordinates.make(e.getPoint());
 	}
 
 	@Override

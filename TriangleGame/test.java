@@ -1,16 +1,16 @@
 package com.cal;
-import java.awt.Color;
 import jge.behavior.Action;
 import jge.behavior.Behaving;
 import jge.entity.Entity;
-import jge.entity.Shape;
-import jge.render.*;
+import jge.render.GUIText;
+import jge.render.Render2D;
+import jge.render.Screen;
 import jge.world.Coordinates;
 import jge.world.World;
 
-public class Test{
+public class test{
 
-	public Test(){}
+	public test(){}
 
 	public static void main(String[] args){
 		jge.behavior.Behavior b = (new jge.behavior.Behavior("test"){
@@ -22,12 +22,11 @@ public class Test{
 				}
 			}
 		});
-		Shape s = new Shape(Coordinates.make(30, 30), Coordinates.make(100, 100), ShapeType.OVAL, Color.DARK_GRAY);
-		s.addBehavior(b);
-		Render2D render = Screen.addWindow("shapes", 800, 450);
+		Entity ent = new Entity(Coordinates.make(30, 30), "images.jpg", b);
+		Render2D render = Screen.addWindow("BEHAVIORS YAY", 800, 450);
 		World world = new World(800, 450, 1);
 		render.setRenderingWorld(world);
-		world.add(s);
+		world.add(ent);
 		System.out.println(render.getRendersPerSecond());
 		world.getTickManager().startNewTickThread();
 		GUIText text = new GUIText("OUT", Coordinates.make(50, 50), "ahsgfkhdgsfk");
