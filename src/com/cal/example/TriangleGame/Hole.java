@@ -1,26 +1,24 @@
-package com.cal;
+package com.cal.example.TriangleGame;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
-import jge.entity.Entity;
+import jge.entity.*;
+import jge.render.GraphicsWrapper;
 import jge.world.Coordinates;
 
 public class Hole extends Entity{
 
 	public Hole(Coordinates pos){
-		super(pos, "");
+		super(pos, Coordinates.make(0,0), "");
 		holes.add(this);
 	}
 	
 	public boolean mostRecent = false;
 	
 	@Override
-	public void render(Graphics2D g){
-		if(mostRecent) g.setColor(Color.GREEN);
-		else g.setColor(Color.BLACK);
-		g.fillOval((int)getPos().getX(), (int)getPos().getY(), 20, 20);
+	public void render(GraphicsWrapper g){
+		g.drawOval(Color.BLACK, getPos(), Coordinates.make(20, 20));
 	}
 
 	public static List<Hole> holes = new ArrayList<Hole>();

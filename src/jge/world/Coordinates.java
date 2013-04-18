@@ -2,7 +2,7 @@ package jge.world;
 
 import java.awt.Point;
 
-public class Coordinates{
+public class Coordinates implements Cloneable{
 
 	private double x;
 	private double y;
@@ -92,6 +92,11 @@ public class Coordinates{
 	
 	public static Coordinates make(Point p){
 		return Coordinates.make(p.x, p.y);
+	}
+	
+	@Override
+	public Coordinates clone(){
+		return Coordinates.make(this);
 	}
 
 }

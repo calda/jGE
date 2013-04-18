@@ -1,6 +1,5 @@
 package jge.entity;
 
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,12 +7,12 @@ import java.util.Map.Entry;
 import jge.behavior.ActionType;
 import jge.behavior.Behaving;
 import jge.behavior.Behavior;
+import jge.group.Groupable;
 import jge.render.*;
 import jge.util.Util;
-import jge.world.CoordinateObject;
-import jge.world.Coordinates;
+import jge.world.*;
 
-public class Entity extends CoordinateObject implements Renderable, Behaving, Scaleable, Prioritizable{
+public class Entity extends CoordinateObject implements Renderable, Behaving, Scaleable, Prioritizable, Groupable{
 
 	private Image image;
 	private Coordinates dim;
@@ -70,12 +69,12 @@ public class Entity extends CoordinateObject implements Renderable, Behaving, Sc
 	}
 
 	@Override
-	public void render(Graphics2D g){
+	public void render(GraphicsWrapper g){
 		Coordinates onScreen = getOwningWorld().getScreenPosition(getOwningWorld().makeWithinMapBounds(getPos()));
 		Coordinates scaledDim = Coordinates.make(this.getDimentions()).multiply(this.getScale());
 		onScreen = onScreen.subtract(Coordinates.make(scaledDim).multiply(0.5));
 		//g.drawImage(image, (int)onScreen.getX(), (int)onScreen.getY(), null);
-		g.drawImage(image, (int)onScreen.getX(), (int)onScreen.getY(), (int)scaledDim.getX(), (int)scaledDim.getY(), null);
+		g.drawImage(image, onScreen, scaledDim);
 	}
 
 	public void addBehavior(Behavior b){

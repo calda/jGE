@@ -1,10 +1,8 @@
-package com.cal;
+package com.cal.example.TriangleGame;
 
-import java.util.Arrays;
+import java.util.*;
 import jge.behavior.*;
 import jge.input.MouseButton;
-import jge.render.GUIText;
-import jge.world.Coordinates;
 import jge.world.World;
 import jge.world.WorldBehavior;
 
@@ -26,7 +24,11 @@ public class LightUp extends WorldBehavior{
 	
 	@Action(type=ActionType.MOUSE_RELEASE, mouse=MouseButton.LEFT)
 	public void release(World w){
+		List<Peg> pegs = new ArrayList<Peg>();
 		for(Peg p : Peg.pegs){
+			pegs.add(p);
+		}
+		for(Peg p : pegs){
 			if(p.pickedUp == true){
 				p.pickedUp = false;
 				Hole closest = Hole.getClosestHoleToPoint(p.getPos());

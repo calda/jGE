@@ -1,4 +1,4 @@
-package com.cal;
+package com.cal.example.TriangleGame;
 
 import java.util.Arrays;
 import jge.world.Coordinates;

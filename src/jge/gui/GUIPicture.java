@@ -1,6 +1,6 @@
-package jge.render;
+package jge.gui;
 
-import java.awt.Graphics2D;
+import jge.render.*;
 import jge.world.Coordinates;
 
 @Deprecated
@@ -11,7 +11,7 @@ public class GUIPicture extends GUIElement{
 	}
 
 	@Override
-	public void render(Graphics2D g){}
+	public void render(GraphicsWrapper g){}
 	
 
 	private Priority priority = Priority.NORMAL;

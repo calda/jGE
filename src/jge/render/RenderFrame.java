@@ -9,13 +9,23 @@ import javax.swing.JFrame;
 public class RenderFrame extends JFrame{
 
 	private Render2D render;
-	
+
+	public RenderFrame(){
+		/*addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e){
+				dispose();
+				System.exit(0); 
+			}
+		});*/
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+	}
+
 	protected void setRender(Render2D render){
 		this.render = render;
 	}
-	
+
 	private boolean first = true;
-	
+
 	@Override
 	public void paint(Graphics g){
 		if(first){
@@ -26,7 +36,7 @@ public class RenderFrame extends JFrame{
 		}
 		//g.clearRect(0, 0, 1920, 1080);
 		long start = System.currentTimeMillis();
-		render.paint((Graphics2D)g);
+		render.paint(new AWTGraphicsWrapper((Graphics2D)g));
 		long renderTime = System.currentTimeMillis() - start;
 		//System.out.println("Render complete, taking " + renderTime + "ms to complete");
 		try{
@@ -36,5 +46,5 @@ public class RenderFrame extends JFrame{
 		} catch(InterruptedException exe){}
 		this.repaint();
 	}
-	
+
 }

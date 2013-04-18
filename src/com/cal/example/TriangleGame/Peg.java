@@ -1,12 +1,12 @@
-package com.cal;
+package com.cal.example.TriangleGame;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import jge.behavior.*;
 import jge.entity.Entity;
+import jge.render.GraphicsWrapper;
 import jge.world.Coordinates;
 
 public class Peg extends Entity{
@@ -19,7 +19,7 @@ public class Peg extends Entity{
 	public Hole currentHole;
 	
 	public Peg(Coordinates pos){
-		super(pos, "");
+		super(pos, Coordinates.make(0,0), "");
 		currentHole = Hole.getClosestHoleToPoint(pos);
 		pegs.add(this);
 		this.addBehavior(new Behavior("pickUp"){
@@ -47,9 +47,8 @@ public class Peg extends Entity{
 	}
 	
 	@Override
-	public void render(Graphics2D g){
-		g.setColor(color);
-		g.fillOval((int)getPos().getX() - 6, (int)getPos().getY() - 6, size, size);
+	public void render(GraphicsWrapper g){
+		g.drawOval(color, Coordinates.make(getPos().getX() - 6, getPos().getY() - 6), Coordinates.make(size, size));
 	}
 	
 	public static Peg getClosestPegToPoint(Coordinates c){

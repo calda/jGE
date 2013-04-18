@@ -14,7 +14,7 @@ public class MoveToMouseOnClick extends Behavior{
 	public MoveToMouseOnClick(String name){
 		super(name);
 	}
-
+	
 	@Action(type=ActionType.MOUSE_PRESS, mouse=MouseButton.LEFT)
 	public void onMousePress(Behaving b){
 		Entity e = (Entity)b;

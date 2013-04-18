@@ -1,32 +1,30 @@
 package jge.world;
 
-import java.awt.Graphics2D;
+import java.awt.Color;
 import java.util.*;
 import jge.behavior.ActionType;
 import jge.behavior.Behaving;
-import jge.render.Render2D;
-import jge.render.RenderPriorityComparator;
-import jge.render.Renderable;
+import jge.group.Group;
+import jge.render.*;
 
-public class World implements Renderable{
+public class World extends Group<CoordinateObject> implements Renderable{
 
-	final private int coordsX;
-	final private int coordsY;
+	final protected int coordsX;
+	final protected int coordsY;
+	protected boolean rendering = false;
+	protected boolean ticking = false;
+	protected boolean modifying = false;
 	final private int pixelsPerBlock;
-	private List<CoordinateObject> objects = new ArrayList<CoordinateObject>();
 	Camera[] cams = new Camera[5];
 	int activeCamera = 0;
 	private final TickManager manager;
 	private Render2D renderer;
 	private final WorldBehavior worldBehave;
-	private boolean rendering = false;
-	private boolean ticking = false;
-	private boolean removing = false;
 
 
 	public World(int maxX, int maxY, int pixelsPerBlock, WorldBehavior worldBehavior){
-		coordsX = maxX;
-		coordsY = maxY;
+		this.coordsX = maxX;
+		this.coordsY = maxY;
 		this.pixelsPerBlock = pixelsPerBlock;
 		for(int i = 0; i < cams.length; i++){
 			cams[i] = null;
@@ -66,12 +64,12 @@ public class World implements Renderable{
 		return "World (" + coordsX + "," + coordsY + ")";
 	}
 
-	public void render(Graphics2D g){
-		if(removing) return;
+	public void render(GraphicsWrapper g){
+		if(modifying) return;
 		rendering = true;
-		g.clearRect(0, 0, 1920, 1080);
+		g.clear(Color.WHITE);
 		List<Renderable> render = new ArrayList<Renderable>();
-		for(CoordinateObject object : objects){
+		for(CoordinateObject object : super.objects){
 			if(object instanceof Renderable) render.add((Renderable)object);
 		}Collections.sort(render, new RenderPriorityComparator());
 		for(Renderable r : render){
@@ -79,49 +77,18 @@ public class World implements Renderable{
 		}rendering = false;
 	}
 
-	public int getMaxCoordsX(){
-		return coordsX;
-	}
-
-	public int getMaxCoordsY(){
-		return coordsY;
-	}
-
 	public int getPixelsPerBlock(){
 		return pixelsPerBlock;
 	}
 
-	public void add(CoordinateObject object){
-		if(object instanceof Camera) throw new IllegalArgumentException("You must add a Camera through the setCamera() method");
-		objects.add(object);
-		object.setWorld(this);
-	}
-
-	private List<CoordinateObject> willRemove = new ArrayList<CoordinateObject>();
-	public void remove(CoordinateObject object){
-		object.setWorld(null);
-		willRemove.add(object);
-	}
-
-	private void removeWillRemove(){
-		if(!rendering && !ticking){
-			for(CoordinateObject object : willRemove){
-				objects.remove(object);
-				if(object instanceof Behaving){
-					((Behaving)object).actionRelevantBehaviors(ActionType.END);
-				}
-			}willRemove.clear();
-			removing = false;
-		}
-	}
-
-
+	@Deprecated
 	public void setCamera(Camera cam, int ref){
 		if(ref > cams.length || ref < 1) throw new IllegalArgumentException("Camera Reference can only be between 1 and " + cams.length);
 		ref -= 1;
 		cams[ref] = cam;
 	}
 
+	@Deprecated
 	public int addCamera(Camera cam){
 		int ref = -1;
 		for(int i = cams.length; i >= 0; i--){
@@ -131,10 +98,12 @@ public class World implements Renderable{
 		return ref += 1;
 	}
 
+	@Deprecated
 	public Camera getActiveCamera(){
 		return cams[activeCamera];
 	}
 
+	@Deprecated
 	public Camera setActiveCamera(int ref){
 		if(ref > cams.length || ref < 1) throw new IllegalArgumentException("Camera Reference can only be between 1 and " + cams.length);
 		if(cams[ref] == null) if(ref > cams.length || ref < 1) throw new IllegalArgumentException("Camera " + ref + " has not been added yet.");
@@ -145,6 +114,52 @@ public class World implements Renderable{
 	public Coordinates getScreenPosition(Coordinates onMap){
 		if(!withinMapBounds(onMap)) throw new IllegalArgumentException("Coordinates must be within map bounds (" + coordsX + "," + coordsY + ") and was (" + onMap.getX() + "," + onMap.getY() + ")");
 		return Coordinates.make(onMap.getX() * pixelsPerBlock, onMap.getY() * pixelsPerBlock);
+	}
+
+	public void tickAllBehaviors(){
+		getRenderer().getMouseHandler().mostRecentMouse = getRenderer().getMousePos();
+		actionRelevantBehaviors(ActionType.TICK);
+	}
+
+	public void actionRelevantBehaviors(ActionType type, Object additional){
+		if(modifying) return;
+		ticking = true;
+		List<Behaving> tick = new ArrayList<Behaving>();
+		for(CoordinateObject object : objects){
+			if(object instanceof Behaving) tick.add(((Behaving)object));
+		}
+		for(Behaving b : tick){
+			b.actionRelevantBehaviors(type, additional);
+		}worldBehave.action(type, additional, null);
+		ticking = false;
+		removeWillRemove();
+		addWillAdd();
+	}
+
+	public void actionRelevantBehaviors(ActionType type){
+		actionRelevantBehaviors(type, null);
+	}
+
+	public TickManager getTickManager(){
+		return manager;
+	}
+	
+	public void destroy(World newWorld){
+		manager.stopTickThread();
+		this.getRenderer().setRenderingWorld(newWorld);
+		objects.clear();
+	}
+	
+	public int getMaxCoordsX(){
+		return coordsX;
+	}
+
+	public int getMaxCoordsY(){
+		return coordsY;
+	}
+	
+	public void printObjectReadout(){
+		System.out.println(super.objects);
 	}
 
 	public boolean withinMapBounds(Coordinates onMap){
@@ -164,38 +179,6 @@ public class World implements Renderable{
 		if(clone.getY() < 0) clone.setY(0);
 		System.out.println("Changed " + onMap + " to " + clone);
 		return clone;
-	}
-
-	public void tickAllBehaviors(){
-		getRenderer().getMouseHandler().mostRecentMouse = getRenderer().getMousePos();
-		actionRelevantBehaviors(ActionType.TICK);
-	}
-
-	public void actionRelevantBehaviors(ActionType type, Object additional){
-		if(removing) return;
-		ticking = true;
-		List<Behaving> tick = new ArrayList<Behaving>();
-		for(CoordinateObject object : objects){
-			if(object instanceof Behaving) tick.add(((Behaving)object));
-		}
-		for(Behaving b : tick){
-			b.actionRelevantBehaviors(type, additional);
-		}worldBehave.action(type, additional, null);
-		ticking = false;
-		removeWillRemove();
-	}
-
-	public void actionRelevantBehaviors(ActionType type){
-		actionRelevantBehaviors(type, null);
-	}
-
-	public TickManager getTickManager(){
-		return manager;
-	}
-	
-	public void destroy(World newWorld){
-		manager.stopTickThread();
-		this.getRenderer().setRenderingWorld(newWorld);
 	}
 
 }

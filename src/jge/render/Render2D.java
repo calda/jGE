@@ -1,6 +1,7 @@
 package jge.render;
 
-import java.awt.Graphics2D;
+import java.awt.*;
+import jge.gui.GUI;
 import jge.input.MouseHandler;
 import jge.world.Coordinates;
 import jge.world.World;
@@ -49,10 +50,9 @@ public class Render2D{
 		world.setRenderer(this);
 	}
 	
-	public void paint(final Graphics2D g){
-		
+	public void paint(final GraphicsWrapper g){
 		if(world != null) world.render(g);
-		else g.clearRect(0, 0, 1920, 1080);
+		else g.clear(Color.WHITE);
 		gui.render(g);
 	}
 	

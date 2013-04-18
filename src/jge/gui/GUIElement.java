@@ -1,5 +1,6 @@
-package jge.render;
+package jge.gui;
 
+import jge.render.Renderable;
 import jge.world.CoordinateObject;
 import jge.world.Coordinates;
 

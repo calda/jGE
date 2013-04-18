@@ -1,8 +1,8 @@
-package jge.render;
+package jge.gui;
 
-import java.awt.Graphics2D;
 import java.util.*;
 import java.util.Map.Entry;
+import jge.render.*;
 
 public class GUI implements Renderable{
 
@@ -41,7 +41,7 @@ public class GUI implements Renderable{
 	}
 	
 	@Override
-	public void render(Graphics2D g){
+	public void render(GraphicsWrapper g){
 		Iterator<Entry<String, GUIElement>> i = elements.entrySet().iterator();
 		while(i.hasNext()){
 			i.next().getValue().render(g);

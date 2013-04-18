@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 import javax.imageio.ImageIO;
+import jge.world.Coordinates;
 
 public class Util{
 	
@@ -21,12 +22,14 @@ public class Util{
 		Color.LIGHT_GRAY, Color.MAGENTA, Color.ORANGE,
 		Color.PINK, Color.RED, Color.WHITE, Color.YELLOW
 	};
+	
 	private static Color[] colorful = {
 		Color.BLUE, Color.CYAN,
 		Color.CYAN, Color.GREEN,
 		Color.MAGENTA, Color.ORANGE,
 		Color.PINK, Color.RED, Color.YELLOW
 	};
+	
 	public static Color getRandomColor(){
 		return colors[(new Random()).nextInt(colors.length)];
 	}
@@ -40,8 +43,24 @@ public class Util{
 		return r.nextInt(options) == 0;
 	}
 	
-	static{
-		
+	public Random random(){
+		return r;
 	}
 	
+	public static Coordinates getDimOfImage(BufferedImage img, double scale){
+		return Coordinates.make(img.getWidth() * scale, img.getHeight() * scale);
+	}
+	
+	public static Coordinates getDimOfImage(BufferedImage img){
+		return getDimOfImage(img, 1);
+	}
+	
+	public static Coordinates getDimOfImage(String img, double scale){
+		return getDimOfImage(imageFromPath(img), scale);
+	}
+	
+	public static Coordinates getDimOfImage(String img){
+		return getDimOfImage(imageFromPath(img), 1);
+	}
+
 }
