@@ -6,6 +6,7 @@ import jge.behavior.ActionType;
 import jge.behavior.Behaving;
 import jge.group.Group;
 import jge.render.*;
+import jge.render.awt.Render2D;
 
 public class World extends Group<CoordinateObject> implements Renderable{
 
@@ -177,7 +178,6 @@ public class World extends Group<CoordinateObject> implements Renderable{
 		if(clone.getX() < 0) clone.setX(0);
 		if(clone.getY() > coordsY) clone.setY(coordsY);
 		if(clone.getY() < 0) clone.setY(0);
-		System.out.println("Changed " + onMap + " to " + clone);
 		return clone;
 	}
 

@@ -2,13 +2,13 @@ package com.cal.example.TriangleGame;
 
 import java.util.Random;
 import jge.entity.Entity;
-import jge.render.Render2D;
 import jge.render.Screen;
+import jge.render.awt.Render2D;
 import jge.util.Util;
 import jge.world.Coordinates;
 import jge.world.World;
 
-public class TriangleGame{
+public class TriangleMain{
 
 	public static void main(String[] args){
 		
@@ -20,8 +20,8 @@ public class TriangleGame{
 				Coordinates.make(93, 337), Coordinates.make(164, 337), Coordinates.make(234, 337), Coordinates.make(302, 337), Coordinates.make(365, 337)
 		};
 		
-		Entity ent = new Entity(Coordinates.make(235, 235), Util.getDimOfImage("triangle.png"), "triangle.png");
 		Render2D render = Screen.addWindow("Triangle Game", 800, 450);
+		Entity ent = new Entity(Coordinates.make(235, 235), Util.getDimOfImage("triangle.png"), "triangle.png");
 		World world = new World(800, 450, new LightUp());
 		render.setRenderingWorld(world);
 		world.add(ent);

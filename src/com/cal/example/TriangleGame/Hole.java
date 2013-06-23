@@ -18,7 +18,7 @@ public class Hole extends Entity{
 	
 	@Override
 	public void render(GraphicsWrapper g){
-		g.drawOval(Color.BLACK, getPos(), Coordinates.make(20, 20));
+		g.drawOval(Color.BLACK, getPos(), Coordinates.make(20, 20), 0);
 	}
 
 	public static List<Hole> holes = new ArrayList<Hole>();

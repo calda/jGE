@@ -1,9 +1,10 @@
-package jge.render;
+package jge.render.awt;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JFrame;
+import jge.render.Screen;
 
 @SuppressWarnings("serial")
 public class RenderFrame extends JFrame{

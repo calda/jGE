@@ -11,7 +11,7 @@ public class Shape extends Entity{
 	
 	public Shape(Coordinates pos, Coordinates dim, ShapeType shape, Color color, Priority p){
 		super(pos, dim, "");
-		if(shape == ShapeType.POLYGON) throw new IllegalArgumentException("Use POLYGON class for things other than rectangles and ovals");
+		if(shape == ShapeType.POLYGON && !(this instanceof Polygon)) throw new IllegalArgumentException("Use POLYGON class for things other than rectangles and ovals");
 		this.shape = shape;
 		this.color = color;
 		setScale(1);
@@ -39,8 +39,8 @@ public class Shape extends Entity{
 		Coordinates onScreen = getOwningWorld().getScreenPosition(getOwningWorld().makeWithinMapBounds(getPos()));
 		Coordinates scaledDim = Coordinates.make(this.getDimentions()).multiply(this.getScale());
 		onScreen = onScreen.subtract(Coordinates.make(scaledDim).multiply(0.5));
-		if(shape == ShapeType.RECTANGLE) g.drawRectangle(color, onScreen, scaledDim);
-		else if(shape == ShapeType.OVAL) g.drawOval(color, onScreen, scaledDim);
+		if(shape == ShapeType.RECTANGLE) g.drawRectangle(color, onScreen, scaledDim, getRotation());
+		else if(shape == ShapeType.OVAL) g.drawOval(color, onScreen, scaledDim, getRotation());
 	}
 	
 	@Override

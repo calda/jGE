@@ -5,6 +5,7 @@ import jge.behavior.*;
 import jge.behavior.prefab.MoveToMouseOnClick;
 import jge.entity.*;
 import jge.render.*;
+import jge.render.awt.Render2D;
 import jge.world.*;
 
 public class Test{

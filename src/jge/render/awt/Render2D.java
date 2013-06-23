@@ -1,8 +1,9 @@
-package jge.render;
+package jge.render.awt;
 
 import java.awt.*;
 import jge.gui.GUI;
 import jge.input.MouseHandler;
+import jge.render.GraphicsWrapper;
 import jge.world.Coordinates;
 import jge.world.World;
 

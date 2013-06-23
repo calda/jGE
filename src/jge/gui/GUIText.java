@@ -32,7 +32,7 @@ public class GUIText extends GUIElement{
 
 	@Override
 	public void render(GraphicsWrapper g){
-		g.drawText(text, font, color, getPos());
+		g.drawText(text, font, color, getPos(), 0);
 	}
 	
 	

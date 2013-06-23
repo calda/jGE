@@ -3,6 +3,7 @@ package jge.render;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import jge.render.awt.*;
 
 public class Screen{
 

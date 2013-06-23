@@ -48,7 +48,7 @@ public class Peg extends Entity{
 	
 	@Override
 	public void render(GraphicsWrapper g){
-		g.drawOval(color, Coordinates.make(getPos().getX() - 6, getPos().getY() - 6), Coordinates.make(size, size));
+		g.drawOval(color, Coordinates.make(getPos().getX() - 6, getPos().getY() - 6), Coordinates.make(size, size), 0);
 	}
 	
 	public static Peg getClosestPegToPoint(Coordinates c){

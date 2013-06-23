@@ -17,6 +17,7 @@ public class Entity extends CoordinateObject implements Renderable, Behaving, Sc
 	private Image image;
 	private Coordinates dim;
 	private double scale = 1;
+	private double rotation = 0;
 	protected HashMap<String, Behavior> behaviors = new HashMap<String, Behavior>();
 	private Priority priority;
 
@@ -74,7 +75,7 @@ public class Entity extends CoordinateObject implements Renderable, Behaving, Sc
 		Coordinates scaledDim = Coordinates.make(this.getDimentions()).multiply(this.getScale());
 		onScreen = onScreen.subtract(Coordinates.make(scaledDim).multiply(0.5));
 		//g.drawImage(image, (int)onScreen.getX(), (int)onScreen.getY(), null);
-		g.drawImage(image, onScreen, scaledDim);
+		g.drawImage(image, onScreen, scaledDim, rotation);
 	}
 
 	public void addBehavior(Behavior b){
@@ -121,6 +122,18 @@ public class Entity extends CoordinateObject implements Renderable, Behaving, Sc
 		return dim;
 	}
 
+	public void setRotation(double rot){
+		this.rotation = rot;
+	}
+	
+	public double getRotation(){
+		return rotation;
+	}
+	
+	public void rotate(double rot){
+		rotation += rot;
+	}
+	
 	public void setScale(double scale){
 		this.scale = scale;
 	}

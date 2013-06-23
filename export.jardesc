@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="MacRoman" standalone="no"?>
+<jardesc>
+    <jar path="/Users/cal/Desktop/gltest.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/jGE/export.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="false" manifestLocation="/jGE/META-INF/MANIFEST.MF" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <file path="/jGE/._.DS_Store"/>
+        <file path="/jGE/._.gitignore"/>
+        <file path="/jGE/.classpath"/>
+        <file path="/jGE/triangle.png"/>
+        <folder path="/jGE/META-INF"/>
+        <file path="/jGE/.project"/>
+        <file path="/jGE/.DS_Store"/>
+        <file path="/jGE/images.jpg"/>
+        <file path="/jGE/.gitignore"/>
+        <javaElement handleIdentifier="=jGE/src"/>
+    </selectedElements>
+</jardesc>
