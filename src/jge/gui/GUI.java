@@ -3,7 +3,7 @@ package jge.gui;
 import java.util.*;
 import java.util.Map.Entry;
 import jge.render.*;
-import jge.render.awt.Render2D;
+import jge.render.Render2D;
 
 public class GUI implements Renderable{
 

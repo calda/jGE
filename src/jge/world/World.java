@@ -6,7 +6,7 @@ import jge.behavior.ActionType;
 import jge.behavior.Behaving;
 import jge.group.Group;
 import jge.render.*;
-import jge.render.awt.Render2D;
+import jge.render.Render2D;
 
 public class World extends Group<CoordinateObject> implements Renderable{
 

@@ -3,7 +3,8 @@ package jge.input;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import jge.behavior.ActionType;
-import jge.render.awt.Render2D;
+import jge.render.Render2D;
+import jge.render.awt.RenderAWT;
 import jge.world.Coordinates;
 
 public class MouseHandler implements MouseListener{
@@ -48,9 +49,9 @@ public class MouseHandler implements MouseListener{
 		}render.getRenderingWorld().actionRelevantBehaviors(ActionType.MOUSE_RELEASE, button);
 	}
 	
-	public void attributeTo(Render2D render){
-		this.render = render;
-		render.getRenderFrame().addMouseListener(this);
+	public void attributeTo(Render2D render2d){
+		this.render = render2d;
+		if(render2d instanceof RenderAWT) ((RenderAWT)render2d).getRenderFrame().addMouseListener(this);
 	}
 
 }

@@ -5,6 +5,7 @@ import jge.render.GraphicsWrapper;
 import jge.util.*;
 import jge.world.Coordinates;
 import org.lwjgl.opengl.*;
+import org.newdawn.slick.TrueTypeFont;
 
 /**
  * For use with OpenGL via LWJGL
@@ -107,15 +108,21 @@ public class GLGraphicsWrapper implements GraphicsWrapper{
 
 	@Override
 	public void drawText(String text, Font f, Color fill, Coordinates pos, double rot){
+		drawText(text, f, fill, pos.getX(), pos.getY(), rot);
 	}
 
 	@Override
-	public void drawText(String text, Font f, Color fill, double x, double y, double rot){}
+	public void drawText(String text, Font f, Color fill, double x, double y, double rot){
+		if(f instanceof GLFont == false) throw new IllegalArgumentException("Can only use GLFont with GLGraphicsWrapper");
+		GLFont gl = (GLFont) f;
+		TrueTypeFont ttf = gl.getTTFont();
+		ttf.drawString((float)x, (float)y, text, GLFont.awtColorToSlickColor(fill));
+	}
 
 	@Override
 	public void clear(Color background){
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		if(background != null) drawRectangle(background, 0, 0, 5000, 5000, 0);
 	}
-
+	
 }

@@ -5,7 +5,8 @@ import jge.behavior.*;
 import jge.behavior.prefab.MoveToMouseOnClick;
 import jge.entity.*;
 import jge.render.*;
-import jge.render.awt.Render2D;
+import jge.render.awt.RenderAWT;
+import jge.render.opengl.RenderGL;
 import jge.world.*;
 
 public class Test{
@@ -14,7 +15,7 @@ public class Test{
 
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args){
-		Render2D render = Screen.addWindow("grouping!!", 800, 450);
+		RenderGL render = new RenderGL(800, 600, 60);
 		World w = new World(800, 450);
 		render.setRenderingWorld(w);
 		Behavior b = new Behavior("randommotion"){
@@ -35,8 +36,8 @@ public class Test{
 		}
 		group.addBehavior(new MoveToMouseOnClick());
 		w.add(group);
-		render.startRendering();
 		w.getTickManager().startNewTickThread();
+		render.start();
 	}
 	
 	public static void main2(String[] args){
@@ -56,7 +57,7 @@ public class Test{
 		Shape s2 = new Shape(Coordinates.make(300, 300), Coordinates.make(150, 100), ShapeType.RECTANGLE, Color.GREEN, Priority.HIGHEST);
 		Shape s3 = new Shape(Coordinates.make(300, 30), Coordinates.make(50, 25), ShapeType.OVAL, Color.MAGENTA);
 		Shape s4 = new Shape(Coordinates.make(30, 300), Coordinates.make(50, 25), ShapeType.OVAL, Color.RED, Priority.LOWEST);
-		Render2D render = Screen.addWindow("shapes", 800, 450);
+		RenderAWT render = (RenderAWT) Screen.addWindow("shapes", 800, 450);
 		World world = new World(800, 450, 1);
 		render.setRenderingWorld(world);
 		world.add(e);

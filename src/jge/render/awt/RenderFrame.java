@@ -9,7 +9,7 @@ import jge.render.Screen;
 @SuppressWarnings("serial")
 public class RenderFrame extends JFrame{
 
-	private Render2D render;
+	private RenderAWT render;
 
 	public RenderFrame(){
 		/*addWindowListener(new WindowAdapter(){
@@ -21,7 +21,7 @@ public class RenderFrame extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 	}
 
-	protected void setRender(Render2D render){
+	protected void setRender(RenderAWT render){
 		this.render = render;
 	}
 

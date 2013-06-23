@@ -73,7 +73,7 @@ public class Screen{
 		f.setResizable(false);
 		f.setEnabled(true);
 		f.setVisible(true);
-		return new Render2D(f, rendersPerSecond);
+		return new RenderAWT(f, rendersPerSecond);
 	}
 	
 	private static int getPositionForCenter(int window, int screen){
