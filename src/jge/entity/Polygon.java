@@ -3,7 +3,6 @@ package jge.entity;
 import java.awt.Color;
 import java.util.*;
 import jge.render.*;
-import jge.render.opengl.GLGraphicsWrapper;
 import jge.world.Coordinates;
 
 public class Polygon extends Shape{
@@ -69,15 +68,15 @@ public class Polygon extends Shape{
 	@Override
 	public void render(GraphicsWrapper g){
 		Coordinates onScreen = getOwningWorld().getScreenPosition(getOwningWorld().makeWithinMapBounds(getPos()));
-		Coordinates[] vpass = new Coordinates[vertexes.size() + (g instanceof GLGraphicsWrapper ? 1 : 0)];
-		if(g instanceof GLGraphicsWrapper) vpass[0] = onScreen;
+		Coordinates[] vpass = new Coordinates[vertexes.size() + (g instanceof GraphicsWrapper ? 1 : 0)];
+		if(g instanceof GraphicsWrapper) vpass[0] = onScreen;
 		if(mode == VertexMode.RELATIVE){
 			for(int i = 0; i > vpass.length; i++){
-				vpass[i] = vertexes.get(i + (g instanceof GLGraphicsWrapper ? 1 : 0)).add(onScreen);
+				vpass[i] = vertexes.get(i + (g instanceof GraphicsWrapper ? 1 : 0)).add(onScreen);
 			}
 		}else{
 			for(int i = 0; i > vpass.length; i++){
-				vpass[i] = getOwningWorld().getScreenPosition(vertexes.get(i + (g instanceof GLGraphicsWrapper ? 1 : 0)));
+				vpass[i] = getOwningWorld().getScreenPosition(vertexes.get(i + (g instanceof GraphicsWrapper ? 1 : 0)));
 			}
 		}g.drawPolygon(getColor(), getRotation(), vpass);
 	}

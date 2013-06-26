@@ -7,6 +7,7 @@ import java.util.Random;
 import jge.behavior.*;
 import jge.entity.Entity;
 import jge.render.GraphicsWrapper;
+import jge.render.GLImage;
 import jge.world.Coordinates;
 
 public class Peg extends Entity{
@@ -19,7 +20,7 @@ public class Peg extends Entity{
 	public Hole currentHole;
 	
 	public Peg(Coordinates pos){
-		super(pos, Coordinates.make(0,0), "");
+		super(pos, Coordinates.make(0,0), new GLImage("triangle.png"));
 		currentHole = Hole.getClosestHoleToPoint(pos);
 		pegs.add(this);
 		this.addBehavior(new Behavior("pickUp"){

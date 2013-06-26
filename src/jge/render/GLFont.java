@@ -1,21 +1,19 @@
-package jge.render.opengl;
+package jge.render;
 
 import java.awt.*;
 import java.io.*;
-import jge.render.FontStyle;
 
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.util.ResourceLoader;
 
 @SuppressWarnings("serial")
-public class GLFont extends Font{
+public class GLFont{
 	
 	int size;
 	Font awtFont;
 	TrueTypeFont ttfont;
 	
 	public GLFont(String font, FontStyle style, int size){
-		super(null, Font.PLAIN, 0);
 		if(!font.contains(".")){
 			awtFont = new Font(font, style.getStyleCode(), size);
 			ttfont = new TrueTypeFont(awtFont, false);
@@ -53,14 +51,6 @@ public class GLFont extends Font{
 	
 	public TrueTypeFont getTTFont(){
 		return ttfont;
-	}
-	
-	public static Color slickColorToAWTColor(org.newdawn.slick.Color slick){
-		return new Color(slick.r, slick.g, slick.b, slick.a);
-	}
-	
-	public static org.newdawn.slick.Color awtColorToSlickColor(Color awt){
-		return new org.newdawn.slick.Color(awt.getRed(), awt.getGreen(), awt.getBlue(), awt.getAlpha());
 	}
 	
 }

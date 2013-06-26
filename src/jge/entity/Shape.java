@@ -38,7 +38,7 @@ public class Shape extends Entity{
 	public void render(GraphicsWrapper g){
 		Coordinates onScreen = getOwningWorld().getScreenPosition(getOwningWorld().makeWithinMapBounds(getPos()));
 		Coordinates scaledDim = Coordinates.make(this.getDimentions()).multiply(this.getScale());
-		onScreen = onScreen.subtract(Coordinates.make(scaledDim).multiply(0.5));
+		//onScreen = onScreen.subtract(Coordinates.make(scaledDim).multiply(0.5));
 		if(shape == ShapeType.RECTANGLE) g.drawRectangle(color, onScreen, scaledDim, getRotation());
 		else if(shape == ShapeType.OVAL) g.drawOval(color, onScreen, scaledDim, getRotation());
 	}

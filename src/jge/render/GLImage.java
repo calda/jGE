@@ -1,4 +1,4 @@
-package jge.render.opengl;
+package jge.render;
 
 import java.awt.*;
 import java.awt.image.*;

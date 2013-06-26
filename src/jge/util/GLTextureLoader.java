@@ -11,7 +11,6 @@ import java.awt.image.DataBufferByte;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.*;
-import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
@@ -262,13 +261,16 @@ public class GLTextureLoader {
 	 * @return The loaded buffered image
 	 * @throws IOException Indicates a failure to find a resource
 	 */
-	public BufferedImage loadImage(String ref) throws IOException 
-	{ 
-		URL url = GLTextureLoader.class.getClassLoader().getResource(ref);
+	public BufferedImage loadImage(String ref) throws IOException{ 
+		//URL url = GLTextureLoader.class.getClassLoader().getResource(ref);
 		BufferedImage bufferedImage;
-		if (url == null) {
+		try{
+			 bufferedImage = ImageIO.read(new BufferedInputStream(getClass().getClassLoader().getResourceAsStream(ref)));
+		}catch(Exception e){
 			bufferedImage = ImageIO.read(new File(ref));
-		}else bufferedImage = ImageIO.read(new BufferedInputStream(getClass().getClassLoader().getResourceAsStream(ref))); 
+		}if(bufferedImage == null){
+			bufferedImage = ImageIO.read(new File(ref));
+		}System.out.println(bufferedImage);
 		return bufferedImage;
 	}
 

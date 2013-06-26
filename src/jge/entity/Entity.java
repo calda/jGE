@@ -34,7 +34,7 @@ public class Entity extends CoordinateObject implements Renderable, Behaving, Sc
 	
 	public Entity(Coordinates pos, Coordinates dim, String filePath, Priority p){
 		super(pos);
-		this.image = Util.imageFromPath(filePath);
+		if(!filePath.equals("") && filePath != null) this.image = new GLImage(filePath);
 		this.dim = dim;
 		setPriority(p);
 	}

@@ -4,17 +4,29 @@ import java.util.Random;
 import jge.behavior.*;
 import jge.behavior.prefab.MoveToMouseOnClick;
 import jge.entity.*;
+import jge.input.AWTMouseHandler;
 import jge.render.*;
 import jge.render.awt.RenderAWT;
-import jge.render.opengl.RenderGL;
+import jge.render.Render2D;
 import jge.world.*;
 
 public class Test{
 
 	public Test(){}
 
-	@SuppressWarnings("deprecation")
 	public static void main(String[] args){
+		RenderGL render = new RenderGL(800,600,60);
+		World w = new World(800, 600);
+		render.setRenderingWorld(w);
+		Shape s = new Shape(Coordinates.make(100, 100), Coordinates.make(50,50), ShapeType.OVAL, Color.red);
+		s.addBehavior(new MoveToMouseOnClick());
+		System.out.println(s);
+		w.add(s);
+		render.start();
+	}
+	
+	@SuppressWarnings("deprecation")
+	public static void main3(String[] args){
 		RenderGL render = new RenderGL(800, 600, 60);
 		World w = new World(800, 450);
 		render.setRenderingWorld(w);
@@ -45,7 +57,7 @@ public class Test{
 			@Action
 			public void onTick(Behaving b){
 				Entity e = (Entity) b;
-				if(e.getOwningWorld().getRenderer().getMouseHandler().leftDown){
+				if(((AWTMouseHandler)e.getOwningWorld().getRenderer().getMouseHandler()).leftDown){
 					e.updatePos(e.getOwningWorld().getRenderer().getMousePos());
 				}
 			}

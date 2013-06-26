@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import jge.entity.*;
 import jge.render.GraphicsWrapper;
+import jge.render.GLImage;
 import jge.world.Coordinates;
 
 public class Hole extends Entity{
 
 	public Hole(Coordinates pos){
-		super(pos, Coordinates.make(0,0), "");
+		super(pos, Coordinates.make(0,0), new GLImage("triangle.png"));
 		holes.add(this);
 	}
 	

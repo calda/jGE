@@ -66,9 +66,9 @@ public class World extends Group<CoordinateObject> implements Renderable{
 	}
 
 	public void render(GraphicsWrapper g){
-		if(modifying) return;
-		rendering = true;
-		g.clear(Color.WHITE);
+		while(modifying){ //wait
+		}rendering = true;
+		//g.clear(Color.WHITE);
 		List<Renderable> render = new ArrayList<Renderable>();
 		for(CoordinateObject object : super.objects){
 			if(object instanceof Renderable) render.add((Renderable)object);
@@ -118,8 +118,7 @@ public class World extends Group<CoordinateObject> implements Renderable{
 	}
 
 	public void tickAllBehaviors(){
-		getRenderer().getMouseHandler().mostRecentMouse = getRenderer().getMousePos();
-		actionRelevantBehaviors(ActionType.TICK);
+		this.actionRelevantBehaviors(ActionType.TICK);
 	}
 
 	public void actionRelevantBehaviors(ActionType type, Object additional){

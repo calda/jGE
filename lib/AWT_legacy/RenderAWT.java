@@ -1,5 +1,6 @@
 package jge.render.awt;
 
+import jge.input.*;
 import jge.render.Render2D;
 import jge.world.Coordinates;
 
@@ -10,6 +11,9 @@ public class RenderAWT extends Render2D{
 	private final RenderFrame frame;
 
 	public RenderAWT(RenderFrame frame, int rendersPerSecond){
+		frame = new RenderFrame();
+		mouse = new AWTMouseHandler();
+		mouse.attributeTo(this);
 		setRendersPerSecond(rendersPerSecond);
 		this.frame = frame;
 		frame.setRender(this);
@@ -40,7 +44,7 @@ public class RenderAWT extends Render2D{
 		try{
 			return Coordinates.make(this.getRenderFrame().getMousePosition().x, this.getRenderFrame().getMousePosition().y);
 		}catch(Exception e){
-			return this.getMouseHandler().mostRecentMouse;
+			return ((AWTMouseHandler)this.getMouseHandler()).mostRecentMouse;
 		}
 	}
 }
