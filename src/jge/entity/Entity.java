@@ -1,6 +1,5 @@
 package jge.entity;
 
-import java.awt.Image;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -9,23 +8,22 @@ import jge.behavior.Behaving;
 import jge.behavior.Behavior;
 import jge.group.Groupable;
 import jge.render.*;
-import jge.util.Util;
 import jge.world.*;
 
 public class Entity extends CoordinateObject implements Renderable, Behaving, Scaleable, Prioritizable, Groupable{
 
-	private Image image;
+	private GLImage image;
 	private Coordinates dim;
 	private double scale = 1;
 	private double rotation = 0;
 	protected HashMap<String, Behavior> behaviors = new HashMap<String, Behavior>();
 	private Priority priority;
 
-	public Entity(Coordinates pos, Coordinates dim, Image image){
+	public Entity(Coordinates pos, Coordinates dim, GLImage image){
 		this(pos, dim, image, Priority.NORMAL);
 	}
 	
-	public Entity(Coordinates pos, Coordinates dim, Image image, Priority p){
+	public Entity(Coordinates pos, Coordinates dim, GLImage image, Priority p){
 		super(pos);
 		this.image = image;
 		this.dim = dim;
@@ -43,7 +41,7 @@ public class Entity extends CoordinateObject implements Renderable, Behaving, Sc
 		this(pos, dim, filePath, Priority.NORMAL);
 	}
 
-	public Entity(Coordinates pos, Coordinates dim, Image image, Priority p, Behavior...behaviors){
+	public Entity(Coordinates pos, Coordinates dim, GLImage image, Priority p, Behavior...behaviors){
 		super(pos);
 		this.image = image;
 		this.dim = dim;
@@ -52,13 +50,13 @@ public class Entity extends CoordinateObject implements Renderable, Behaving, Sc
 		}setPriority(p);
 	}
 	
-	public Entity(Coordinates pos, Coordinates dim, Image image, Behavior...behaviors){
+	public Entity(Coordinates pos, Coordinates dim, GLImage image, Behavior...behaviors){
 		this(pos, dim, image, Priority.NORMAL, behaviors);
 	}
 	
 	public Entity(Coordinates pos, Coordinates dim, String filePath, Priority p, Behavior...behaviors){
 		super(pos);
-		this.image = Util.imageFromPath(filePath);
+		if(!filePath.equals("") && filePath != null) this.image = new GLImage(filePath);
 		this.dim = dim;
 		for(Behavior b : behaviors){
 			addBehavior(b);
@@ -74,7 +72,6 @@ public class Entity extends CoordinateObject implements Renderable, Behaving, Sc
 		Coordinates onScreen = getOwningWorld().getScreenPosition(getOwningWorld().makeWithinMapBounds(getPos()));
 		Coordinates scaledDim = Coordinates.make(this.getDimentions()).multiply(this.getScale());
 		onScreen = onScreen.subtract(Coordinates.make(scaledDim).multiply(0.5));
-		//g.drawImage(image, (int)onScreen.getX(), (int)onScreen.getY(), null);
 		g.drawImage(image, onScreen, scaledDim, rotation);
 	}
 

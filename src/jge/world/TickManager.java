@@ -32,7 +32,7 @@ public class TickManager{
 	}
 	
 	public void startNewTickThread(){
-		startNewTickThread(50);
+		startNewTickThread(60);
 	}
 	
 }

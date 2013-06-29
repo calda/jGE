@@ -4,7 +4,7 @@ import java.util.Random;
 import jge.entity.Entity;
 import jge.render.Screen;
 import jge.render.awt.RenderAWT;
-import jge.render.Render2D;
+import jge.render.RenderGL;
 import jge.world.Coordinates;
 import jge.world.World;
 

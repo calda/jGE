@@ -2,8 +2,7 @@ package jge.behavior.prefab;
 
 import jge.behavior.*;
 import jge.entity.Entity;
-import jge.input.MouseButton;
-import jge.world.Coordinates;
+import jge.input.*;
 
 public class MoveToMouseOnClick extends Behavior{
 
@@ -15,11 +14,10 @@ public class MoveToMouseOnClick extends Behavior{
 		super(name);
 	}
 	
-	@Action(type=ActionType.MOUSE_PRESS, mouse=MouseButton.LEFT)
+	@Action(type=ActionType.MOUSE_CLICK, mouse=MouseButton.LEFT)
 	public void onMousePress(Behaving b){
 		Entity e = (Entity)b;
-		Coordinates coor = e.getOwningWorld().getRenderer().getMousePos();
-		e.updatePos(coor);
+		e.updatePos(MouseHandler.getPos());
 	}
 	
 }

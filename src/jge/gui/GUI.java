@@ -3,15 +3,15 @@ package jge.gui;
 import java.util.*;
 import java.util.Map.Entry;
 import jge.render.*;
-import jge.render.Render2D;
+import jge.render.RenderGL;
 
 public class GUI implements Renderable{
 
 	private final HashMap<String, GUIElement> elements = new HashMap<String, GUIElement>();
-	private final Render2D render;
+	private final RenderGL render;
 	
 	
-	public GUI(Render2D render){
+	public GUI(RenderGL render){
 		this.render = render;
 	}
 	
@@ -31,7 +31,7 @@ public class GUI implements Renderable{
 		elements.clear();
 	}
 	
-	public Render2D getRenderer(){
+	public RenderGL getRenderer(){
 		return render;
 	}
 	

@@ -1,6 +1,6 @@
 package jge.render;
 
-import java.awt.*;
+import jge.render.Color;
 import jge.util.*;
 import jge.world.Coordinates;
 import org.lwjgl.opengl.*;
@@ -9,16 +9,15 @@ import org.newdawn.slick.TrueTypeFont;
 /**
  * For use with OpenGL via LWJGL
  */
-public class GraphicsWrapper implements GraphicsWrapper{
+public class GraphicsWrapper{
 
-	@Override
 	public void drawRectangle(Color fill, double x, double y, double width, double height, double rot){
 		GL11.glPushMatrix();
 		GL11.glTranslated(x, y, 0);
 		GL11.glRotated(rot, 0, 0, 1);
 		GL11.glTranslated(-x, -y, 0);
 		GL11.glBegin(GL11.GL_TRIANGLES);
-		if(fill != null)GL11.glColor3d(fill.getRed(), fill.getGreen(), fill.getBlue());
+		if(fill != null)GL11.glColor4d(fill.getRed()/256.0, fill.getGreen()/256.0, fill.getBlue()/256.0, fill.getAlpha()/256.0);
 		double width2 = width/2;
 		double height2 = height/2;
 		GL11.glVertex2d(x - width2, y + height2);
@@ -26,7 +25,7 @@ public class GraphicsWrapper implements GraphicsWrapper{
 		GL11.glVertex2d(x + width2, y + height2);
 		GL11.glEnd();
 		GL11.glBegin(GL11.GL_TRIANGLES);
-		if(fill != null)GL11.glColor3d(fill.getRed(), fill.getGreen(), fill.getBlue());
+		if(fill != null)GL11.glColor4d(fill.getRed()/256.0, fill.getGreen()/256.0, fill.getBlue()/256.0, fill.getAlpha()/256.0);
 		GL11.glVertex2d(x - width2, y - height2);
 		GL11.glVertex2d(x + width2, y + height2);
 		GL11.glVertex2d(x + width2, y - height2);
@@ -34,12 +33,10 @@ public class GraphicsWrapper implements GraphicsWrapper{
 		GL11.glPopMatrix();
 	}
 
-	@Override
 	public void drawRectangle(Color fill, Coordinates pos, Coordinates dim, double rot){
 		this.drawRectangle(fill, pos.getX(), pos.getY(), dim.getX(), dim.getY(), rot);
 	}
 
-	@Override
 	public void drawOval(Color fill, double x, double y, double width, double height, double rot){
 		System.out.println("Drawing oval at " + x + "," + y);
 		GL11.glPushMatrix();
@@ -54,15 +51,12 @@ public class GraphicsWrapper implements GraphicsWrapper{
 		GL11.glPopMatrix();
 	}
 
-	@Override
 	public void drawOval(Color fill, Coordinates pos, Coordinates dim, double rot){
 		this.drawOval(fill, pos.getX(), pos.getY(), dim.getX(), dim.getY(), rot);
 	}
 
-	@Override
-	public void drawImage(Image image, double x, double y, double width, double height, double rot){
+	public void drawImage(GLImage image, double x, double y, double width, double height, double rot){
 		rot += 180;
-		if(image instanceof GLImage == false) throw new IllegalArgumentException("Image must be a jge.render.GLImage");
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GLImage gl = (GLImage) image;
 		Texture texture = gl.getGLTexture();
@@ -87,12 +81,10 @@ public class GraphicsWrapper implements GraphicsWrapper{
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 	}
 
-	@Override
-	public void drawImage(Image image, Coordinates pos, Coordinates dim, double rot){
+	public void drawImage(GLImage image, Coordinates pos, Coordinates dim, double rot){
 		drawImage(image, pos.getX(), pos.getY(), dim.getX(), dim.getY(), rot);
 	}
 
-	@Override
 	public void drawPolygon(Color fill, double rot, Coordinates... vertex){
 		GL11.glPushMatrix();
 		GL11.glTranslated(vertex[0].getX(), vertex[0].getY(), 0);
@@ -105,20 +97,16 @@ public class GraphicsWrapper implements GraphicsWrapper{
 		GL11.glPopMatrix();
 	}
 
-	@Override
-	public void drawText(String text, Font f, Color fill, Coordinates pos, double rot){
+	public void drawText(String text, GLFont f, Color fill, Coordinates pos, double rot){
 		drawText(text, f, fill, pos.getX(), pos.getY(), rot);
 	}
 
-	@Override
-	public void drawText(String text, Font f, Color fill, double x, double y, double rot){
-		if(f instanceof GLFont == false) throw new IllegalArgumentException("Can only use GLFont with GLGraphicsWrapper");
+	public void drawText(String text, GLFont f, Color fill, double x, double y, double rot){
 		GLFont gl = (GLFont) f;
 		TrueTypeFont ttf = gl.getTTFont();
-		ttf.drawString((float)x, (float)y, text, GLFont.awtColorToSlickColor(fill));
+		ttf.drawString((float)x, (float)y, text, new org.newdawn.slick.Color(fill.getRed(), fill.getGreen(), fill.getBlue(), fill.getAlpha()));
 	}
 
-	@Override
 	public void clear(Color background){
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		if(background != null) drawRectangle(background, 0, 0, 5000, 5000, 0);

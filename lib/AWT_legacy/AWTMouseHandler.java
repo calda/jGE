@@ -3,7 +3,7 @@ package jge.input;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import jge.behavior.ActionType;
-import jge.render.Render2D;
+import jge.render.RenderGL;
 import jge.world.Coordinates;
 
 public class AWTMouseHandler extends MouseHandler implements MouseListener{

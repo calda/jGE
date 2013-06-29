@@ -30,9 +30,9 @@ public class GUIText extends GUIElement{
 		return text;
 	}
 
-	@Override
+	@Deprecated
 	public void render(GraphicsWrapper g){
-		g.drawText(text, font, color, getPos(), 0);
+		//g.drawText(text, null, color, getPos(), 0.0);
 	}
 	
 	

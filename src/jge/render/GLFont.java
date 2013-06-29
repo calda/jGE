@@ -6,7 +6,6 @@ import java.io.*;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.util.ResourceLoader;
 
-@SuppressWarnings("serial")
 public class GLFont{
 	
 	int size;

@@ -1,7 +1,7 @@
 package jge.render.awt;
 
 import jge.input.*;
-import jge.render.Render2D;
+import jge.render.RenderGL;
 import jge.world.Coordinates;
 
 public class RenderAWT extends Render2D{

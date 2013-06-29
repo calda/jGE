@@ -1,12 +1,11 @@
 package jge.world;
 
-import java.awt.Color;
 import java.util.*;
 import jge.behavior.ActionType;
 import jge.behavior.Behaving;
 import jge.group.Group;
 import jge.render.*;
-import jge.render.Render2D;
+import jge.render.RenderGL;
 
 public class World extends Group<CoordinateObject> implements Renderable{
 
@@ -19,7 +18,7 @@ public class World extends Group<CoordinateObject> implements Renderable{
 	Camera[] cams = new Camera[5];
 	int activeCamera = 0;
 	private final TickManager manager;
-	private Render2D renderer;
+	private RenderGL renderer;
 	private final WorldBehavior worldBehave;
 
 
@@ -53,11 +52,11 @@ public class World extends Group<CoordinateObject> implements Renderable{
 		return worldBehave;
 	}
 
-	public void setRenderer(Render2D renderer){
+	public void setRenderer(RenderGL renderer){
 		this.renderer = renderer;
 	}
 
-	public Render2D getRenderer(){
+	public RenderGL getRenderer(){
 		return renderer;
 	}
 

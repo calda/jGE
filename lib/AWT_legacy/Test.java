@@ -7,7 +7,7 @@ import jge.entity.*;
 import jge.input.AWTMouseHandler;
 import jge.render.*;
 import jge.render.awt.RenderAWT;
-import jge.render.Render2D;
+import jge.render.RenderGL;
 import jge.world.*;
 
 public class Test{

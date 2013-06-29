@@ -1,6 +1,5 @@
 package jge.entity;
 
-import java.awt.Color;
 import java.util.*;
 import jge.render.*;
 import jge.world.Coordinates;
