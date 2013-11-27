@@ -12,8 +12,10 @@ public class RenderGL{
 	final int fps;
 	private World world;
 	private final MouseHandler mouse;
+	public final Coordinates screenSize;
 	
 	public RenderGL(final int x, final int y, final int fps) {
+		screenSize = Coordinates.make(x, y);
 		mouse = new MouseHandler(this);
 		this.fps = fps;
 		this.graphics = new GraphicsWrapper();
@@ -38,7 +40,6 @@ public class RenderGL{
 	}
 	
 	public void render(){
-		graphics.clear(Color.BLACK);
 		world.render(graphics);
 		//gui.render(graphics);
 	}
@@ -51,7 +52,6 @@ public class RenderGL{
 			new NullPointerException("Rendering World must be set before rendering can start").printStackTrace();
 			System.exit(0);
 		}while(!Display.isCloseRequested()) {
-			graphics.clear(Color.BLACK);
 			render();
 			mouse.pollInput();
 			Display.update();
@@ -65,7 +65,12 @@ public class RenderGL{
 	}
 	
 	public void setRenderingWorld(World w){
-		if(world != null) world.destroy(w);
-		else world = w;
+		world = w;
+		world.setRenderer(this);
 	}
+	
+	public Coordinates getScreenCenter(){
+		return Coordinates.make(screenSize.getX() / 2, screenSize.getY() / 2);
+	}
+	
 }

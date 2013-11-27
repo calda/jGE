@@ -1,11 +1,11 @@
 package jge.world;
 
 import java.util.*;
+import jge.animation.Animatable;
 import jge.behavior.ActionType;
 import jge.behavior.Behaving;
 import jge.group.Group;
 import jge.render.*;
-import jge.render.RenderGL;
 
 public class World extends Group<CoordinateObject> implements Renderable{
 
@@ -20,7 +20,7 @@ public class World extends Group<CoordinateObject> implements Renderable{
 	private final TickManager manager;
 	private RenderGL renderer;
 	private final WorldBehavior worldBehave;
-
+	private Color background = new Color(255, 255, 255);
 
 	public World(int maxX, int maxY, int pixelsPerBlock, WorldBehavior worldBehavior){
 		this.coordsX = maxX;
@@ -64,10 +64,15 @@ public class World extends Group<CoordinateObject> implements Renderable{
 		return "World (" + coordsX + "," + coordsY + ")";
 	}
 
+	public boolean renderObject(){
+		return true;
+	}
+	
 	public void render(GraphicsWrapper g){
 		while(modifying){ //wait
 		}rendering = true;
-		//g.clear(Color.WHITE);
+		g.clear(background);
+		if(getActiveCamera() != null) g.setCameraRotation(getActiveCamera().getRotation(), getRenderer().screenSize);
 		List<Renderable> render = new ArrayList<Renderable>();
 		for(CoordinateObject object : super.objects){
 			if(object instanceof Renderable) render.add((Renderable)object);
@@ -81,29 +86,27 @@ public class World extends Group<CoordinateObject> implements Renderable{
 		return pixelsPerBlock;
 	}
 
-	@Deprecated
 	public void setCamera(Camera cam, int ref){
 		if(ref > cams.length || ref < 1) throw new IllegalArgumentException("Camera Reference can only be between 1 and " + cams.length);
 		ref -= 1;
 		cams[ref] = cam;
 	}
 
-	@Deprecated
 	public int addCamera(Camera cam){
 		int ref = -1;
-		for(int i = cams.length; i >= 0; i--){
-			if(cams[i] == null) ref = i;
+		for(int i = 0; i < cams.length; i++){
+			if(cams[i] == null && ref == -1) ref = i;
 		}if(ref == -1) throw new IllegalArgumentException("Only " + cams.length + " cameras can be active at once.");
 		cams[ref] = cam;
+		cam.setWorld(this);
 		return ref += 1;
 	}
 
-	@Deprecated
 	public Camera getActiveCamera(){
-		return cams[activeCamera];
+		if(activeCamera == 0) return null;
+		return cams[activeCamera - 1];
 	}
 
-	@Deprecated
 	public Camera setActiveCamera(int ref){
 		if(ref > cams.length || ref < 1) throw new IllegalArgumentException("Camera Reference can only be between 1 and " + cams.length);
 		if(cams[ref] == null) if(ref > cams.length || ref < 1) throw new IllegalArgumentException("Camera " + ref + " has not been added yet.");
@@ -118,14 +121,21 @@ public class World extends Group<CoordinateObject> implements Renderable{
 
 	public void tickAllBehaviors(){
 		this.actionRelevantBehaviors(ActionType.TICK);
+		for(Camera c : cams){
+			if(c != null && c.isAnimating()) c.tickAnimation();
+		}
 	}
 
 	public void actionRelevantBehaviors(ActionType type, Object additional){
-		if(modifying) return;
+		while(modifying){ }
 		ticking = true;
 		List<Behaving> tick = new ArrayList<Behaving>();
 		for(CoordinateObject object : objects){
 			if(object instanceof Behaving) tick.add(((Behaving)object));
+			if(type == ActionType.TICK && object instanceof Animatable){
+				Animatable a = (Animatable) object;
+				if(a.isAnimating()) a.tickAnimation();
+			}
 		}
 		for(Behaving b : tick){
 			b.actionRelevantBehaviors(type, additional);
@@ -177,6 +187,14 @@ public class World extends Group<CoordinateObject> implements Renderable{
 		if(clone.getY() > coordsY) clone.setY(coordsY);
 		if(clone.getY() < 0) clone.setY(0);
 		return clone;
+	}
+	
+	public void setBackgroundColor(Color background){
+		this.background = background;
+	}
+	
+	public Color getBackgroundColor(){
+		return background;
 	}
 
 }

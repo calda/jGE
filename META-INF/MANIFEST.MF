@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
 Class-Path: lib/lwjgl.jar lib/lwjgl_util.jar lib/jinput.jar
-Main-Class: com.cal.test.Test
+Main-Class: com.cal.example.terrarigen.TerrariGen
 

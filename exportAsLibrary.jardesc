@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="MacRoman" standalone="no"?>
 <jardesc>
-    <jar path="/Users/cal/Desktop/lib/jge.jar"/>
+    <jar path="/Users/calstephens/Desktop/checkers.jar"/>
     <options buildIfNeeded="true" compress="true" descriptionLocation="/jGE/export.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
@@ -11,11 +11,13 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
-        <file path="/jGE/.DS_Store"/>
+        <file path="/jGE/._.DS_Store"/>
+        <file path="/jGE/._.gitignore"/>
         <file path="/jGE/.classpath"/>
-        <javaElement handleIdentifier="=jGE/src"/>
-        <file path="/jGE/.gitignore"/>
         <folder path="/jGE/META-INF"/>
         <file path="/jGE/.project"/>
+        <file path="/jGE/.DS_Store"/>
+        <file path="/jGE/.gitignore"/>
+        <javaElement handleIdentifier="=jGE/src"/>
     </selectedElements>
 </jardesc>

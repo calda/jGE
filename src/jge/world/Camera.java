@@ -1,11 +1,14 @@
 package jge.world;
 
-import java.awt.Graphics2D;
-import jge.render.Priority;
-import jge.render.Renderable;
+public class Camera extends CoordinateObject{
 
-public abstract class Camera extends CoordinateObject implements Renderable{
-
+	public static double rotation = 0;
+	
+	@Deprecated
+	public Camera(){
+		super(null);
+	}
+	
 	public Camera(Coordinates pos){
 		super(pos);
 	}
@@ -13,17 +16,11 @@ public abstract class Camera extends CoordinateObject implements Renderable{
 	public Camera(double x, double y){
 		super(x, y);
 	}
-
-	public void render(Graphics2D g){
-		
+	
+	@Override
+	public void setRotation(double rot){
+		super.setRotation(rot);
+		rotation = rot;
 	}
 	
-	private Priority priority = Priority.NORMAL;
-	public void setPriority(Priority p){
-		this.priority = p;
-	}
-	public Priority getPriority(){
-		return priority;
-	}
-
 }

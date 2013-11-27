@@ -4,11 +4,13 @@ import java.awt.*;
 import jge.render.GraphicsWrapper;
 import jge.world.Coordinates;
 
+@SuppressWarnings("unused")
 public class GUIText extends GUIElement{
 
 	private String text;
 	private Font font = Font.getFont("Arial");
 	private Color color;
+	private boolean render;
 	
 	public GUIText(String name, String text, Coordinates pos, Color c){
 		super(name, pos);
@@ -30,6 +32,15 @@ public class GUIText extends GUIElement{
 		return text;
 	}
 
+	public void render(boolean render){
+		this.render = render;
+	}
+	
+	@Override
+	public boolean renderObject(){
+		return render;
+	}
+	
 	@Deprecated
 	public void render(GraphicsWrapper g){
 		//g.drawText(text, null, color, getPos(), 0.0);

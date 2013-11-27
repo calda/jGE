@@ -3,16 +3,15 @@ package jge.gui;
 import java.util.*;
 import java.util.Map.Entry;
 import jge.render.*;
-import jge.render.RenderGL;
 
 public class GUI implements Renderable{
 
 	private final HashMap<String, GUIElement> elements = new HashMap<String, GUIElement>();
-	private final RenderGL render;
+	private final RenderGL renderer;
+	private boolean render;
 	
-	
-	public GUI(RenderGL render){
-		this.render = render;
+	public GUI(RenderGL renderer){
+		this.renderer = renderer;
 	}
 	
 	public void addGUIElement(GUIElement elem){
@@ -32,13 +31,22 @@ public class GUI implements Renderable{
 	}
 	
 	public RenderGL getRenderer(){
-		return render;
+		return renderer;
 	}
 	
 	public GUIElement getElement(String name){
 		GUIElement get = elements.get(name);
 		if(get == null) throw new IllegalArgumentException("A GUI Element with that name doesn't exist");
 		return get;
+	}
+	
+	public void render(boolean render){
+		this.render = render;
+	}
+	
+	@Override
+	public boolean renderObject(){
+		return render;
 	}
 	
 	@Override

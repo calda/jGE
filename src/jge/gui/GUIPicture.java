@@ -6,6 +6,8 @@ import jge.world.Coordinates;
 @Deprecated
 public class GUIPicture extends GUIElement{
 	
+	private boolean render;
+	
 	public GUIPicture(String name, Coordinates screenPos){
 		super(name, screenPos);
 	}
@@ -20,6 +22,15 @@ public class GUIPicture extends GUIElement{
 	}
 	public Priority getPriority(){
 		return priority;
+	}
+	
+	public void render(boolean render){
+		this.render = render;
+	}
+	
+	@Override
+	public boolean renderObject(){
+		return render;
 	}
 
 }

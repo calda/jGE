@@ -1,6 +1,7 @@
 package jge.group;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import jge.behavior.*;
 import jge.world.*;
 
@@ -9,7 +10,7 @@ public class Group<T>{
 	public boolean rendering = false;
 	public boolean ticking = false;
 	public boolean modifying = false;
-	protected List<T> objects = new ArrayList<T>();
+	protected List<T> objects = new CopyOnWriteArrayList<T>();
 	protected List<T> willAdd = new ArrayList<T>();
 	protected List<T> willRemove = new ArrayList<T>();
 	private final World owningWorld;

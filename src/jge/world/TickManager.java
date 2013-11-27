@@ -17,7 +17,6 @@ public class TickManager{
 	}
 	
 	public void startNewTickThread(final float ticksPerSecond){
-		System.out.println((long)(1.0f/ticksPerSecond * 1000f));
 		timer.scheduleAtFixedRate(new TimerTask(){
 			@Override
 			public void run(){
